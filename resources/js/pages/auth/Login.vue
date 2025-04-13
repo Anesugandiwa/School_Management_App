@@ -1,93 +1,116 @@
-<script setup lang="ts">
-import InputError from '@/components/InputError.vue';
-import TextLink from '@/components/TextLink.vue';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthBase from '@/layouts/AuthLayout.vue';
+<script setup>
+import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
-import { LoaderCircle } from 'lucide-vue-next';
+import ResetPassword from './ResetPassword.vue';
 
-defineProps<{
-    status?: string;
-    canResetPassword: boolean;
-}>();
 
 const form = useForm({
-    email: '',
+    email:'',
     password: '',
     remember: false,
+
 });
 
-const submit = () => {
+const submitForm =() =>{
     form.post(route('login'), {
-        onFinish: () => form.reset('password'),
+        onFinish: () => form.reset('Password'),
     });
-};
+}
+
+
+
 </script>
 
 <template>
-    <AuthBase title="Log in to your account" description="Enter your email and password below to log in">
-        <Head title="Log in" />
+  <DefaultLayout>
+    <v-container fluid class="bg-gradient">
+      <v-form @submit.prevent="submitForm">
+        <v-card 
+          class="mx-auto auth-card" 
+          max-width="500" 
+          elevation="10"
+          rounded="lg"
+        >
+          <!-- Header -->
+          <v-card-title class="text-center pt-8 text-h4 font-weight-bold text-primary">
+            school Portal
+            <v-icon end color="primary" class="ml-2">mdi-shield-account</v-icon>
+          </v-card-title>
 
-        <div v-if="status" class="mb-4 text-center text-sm font-medium text-green-600">
-            {{ status }}
-        </div>
+          <v-card-subtitle class="text-center text-medium-emphasis mb-6">
+            Restricted access - authorized personnel only
+          </v-card-subtitle>
 
-        <form @submit.prevent="submit" class="flex flex-col gap-6">
-            <div class="grid gap-6">
-                <div class="grid gap-2">
-                    <Label for="email">Email address</Label>
-                    <Input
-                        id="email"
-                        type="email"
-                        required
-                        autofocus
-                        :tabindex="1"
-                        autocomplete="email"
-                        v-model="form.email"
-                        placeholder="email@example.com"
-                    />
-                    <InputError :message="form.errors.email" />
-                </div>
+          <v-card-text>
+            <!-- Email Field -->
+            <v-text-field
+              variant="outlined"
+              color="primary"
+              v-model="form.email"
+              prepend-inner-icon="mdi-email-outline"
+              label="Enter Email"
+              type="email"
+              class="mb-4"
+              :rules="[v => !!v || 'Email is required']"
+              hide-details="auto"
+              placeholder="admin@yourdomain.com"
+            ></v-text-field>
 
-                <div class="grid gap-2">
-                    <div class="flex items-center justify-between">
-                        <Label for="password">Password</Label>
-                        <TextLink v-if="canResetPassword" :href="route('password.request')" class="text-sm" :tabindex="5">
-                            Forgot password?
-                        </TextLink>
-                    </div>
-                    <Input
-                        id="password"
-                        type="password"
-                        required
-                        :tabindex="2"
-                        autocomplete="current-password"
-                        v-model="form.password"
-                        placeholder="Password"
-                    />
-                    <InputError :message="form.errors.password" />
-                </div>
+            <!-- Password Field -->
+            <v-text-field
+              variant="outlined"
+              v-model="form.password"
+              color="primary"
+              prepend-inner-icon="mdi-lock-outline"
+              :append-inner-icon="showPassword ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
+              label="Password"
+              :type="showPassword ? 'text' : 'password'"
+              @click:append-inner="showPassword = !showPassword"
+              class="mb-2"
+              :rules="[v => !!v || 'Password is required']"
+              hide-details="auto"
+            ></v-text-field>
 
-                <div class="flex items-center justify-between" :tabindex="3">
-                    <Label for="remember" class="flex items-center space-x-3">
-                        <Checkbox id="remember" v-model="form.remember" :tabindex="4" />
-                        <span>Remember me</span>
-                    </Label>
-                </div>
-
-                <Button type="submit" class="mt-4 w-full" :tabindex="4" :disabled="form.processing">
-                    <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
-                    Log in
-                </Button>
+            <!-- Remember Me & Forgot Password -->
+            <div class="d-flex align-center mb-6">
+              <v-checkbox
+                color="primary"
+                label="Remember this device"
+                density="compact"
+                hide-details
+              ></v-checkbox>
+              <v-spacer></v-spacer>
+              <a 
+                href="#forgot-password" 
+                class="text-caption text-primary text-decoration-none"
+              >
+                Forgot password?
+              </a>
             </div>
 
-            <div class="text-center text-sm text-muted-foreground">
-                Don't have an account?
-                <TextLink :href="route('register')" :tabindex="5">Sign up</TextLink>
-            </div>
-        </form>
-    </AuthBase>
+            <!-- Login Button -->
+            <v-btn
+              block
+              size="large"
+              color="primary"
+              rounded="lg"
+              class="text-white font-weight-bold py-6"
+              type="submit"
+            >
+              Log In
+              <v-icon end>mdi-arrow-right-circle</v-icon>
+            </v-btn>
+          </v-card-text>
+
+          <!-- Security Notice -->
+          <v-card-actions class="justify-center pa-2">
+            <span class="text-caption text-medium-emphasis">
+              <v-icon small color="warning">mdi-security</v-icon>
+              All access attempts are logged
+            </span>
+          </v-card-actions>
+        </v-card>
+      </v-form>
+    </v-container>
+  </DefaultLayout>
 </template>

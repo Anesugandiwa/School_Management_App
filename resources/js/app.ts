@@ -1,11 +1,22 @@
 import '../css/app.css';
+import 'vuetify/styles' 
 
-import { createInertiaApp } from '@inertiajs/vue3';
+import { createInertiaApp, Link, Head } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 import { initializeTheme } from './composables/useAppearance';
+import vuetify from './plugins/vuetify'
+
+
+
+
+const options = {
+    confirmButtonColor: '#41a748',
+    cancelButtonColor: '#c20d0d',
+};
+
 
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
@@ -20,7 +31,7 @@ declare module 'vite/client' {
     }
 }
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Riverhose';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -29,10 +40,16 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .use(vuetify)
+            
+            .component('InertiaLink', Link)
+            .component('Head', Head)
+            
             .mount(el);
     },
     progress: {
-        color: '#4B5563',
+        color: '#F58634',
+        showSpinner:true
     },
 });
 
