@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class TeacherDashboardController extends Controller
 {
     public function index(){
-        return inertia('Teacher/Dashboard');
+        return inertia('Teacher/display');
     }
 }

@@ -12,29 +12,59 @@ const menues = ref([
         id: 1,
     },
     {
-        name: "Events",
+        name: "Add Staff",
         
-        icon: "mdi-calendar-text",
-        id: 22,
-    },
-    {
-        name: "Organisers",
-        
-        icon:"mdi-account-multiple",
+        icon: "mdi-account-cog",
         id: 2,
     },
+    {
+        name: "Add Students",
+        
+        icon:"mdi-account-multiple",
+        id: 3,
+    },
+    {
+        name: "Manage Classes",
+        icon: "mdi-google-classroom",
+        id: 4,
+    },
+    {
+        name: "Manage Subjects",
+        icon: "mdi-book-open-page-variant",
+        id: 5,
+    },
+    {
+        name: "Attendance",
+        icon: "mdi-calendar-check",
+        id: 6,
+    },
+    {
+        name: "Reports",
+        icon: "mdi-chart-box-outline",
+        id: 7,
+    },
+    {
+        name: "Activities & Events",
+        icon: "mdi-calendar-multiselect",
+        id: 8,
+    },
+    {
+        name: "Manage Fees",
+        icon: "mdi-cash-multiple",
+        id: 10,
+    }
 
 
 
 ]);
 
-// function logout() {
-//     router.post('/logout', {}, {
-//         onSuccess: () => {
-//             // window.location.reload()
-//         },
-//     });
-// }
+function logout() {
+    router.post('/logout', {}, {
+        onSuccess: () => {
+            window.location.reload()
+        },
+    });
+}
 </script>
 
 
@@ -87,7 +117,7 @@ const menues = ref([
                             <div>
 
                                    <v-btn
-                                        @click="logout()"
+                                       @click="logout()"
                                        color="primary"
                                        icon="mdi-location-exit"
                                        variant="elevated"

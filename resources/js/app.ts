@@ -7,7 +7,10 @@ import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 import { initializeTheme } from './composables/useAppearance';
-import vuetify from './plugins/vuetify'
+import vuetify from './plugins/vuetify';
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 
 
 
@@ -41,6 +44,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(vuetify)
+            .use(VueSweetalert2,options)
             
             .component('InertiaLink', Link)
             .component('Head', Head)
