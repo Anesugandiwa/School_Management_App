@@ -15,10 +15,12 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 
 
+
 const options = {
     confirmButtonColor: '#41a748',
     cancelButtonColor: '#c20d0d',
 };
+
 
 
 // Extend ImportMeta interface for Vite...

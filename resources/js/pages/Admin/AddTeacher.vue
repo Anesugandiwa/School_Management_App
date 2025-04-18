@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useForm } from '@inertiajs/vue3'
+import AdminLayout from '@/layouts/AdminLayout.vue';
+import Swal from 'sweetalert2'
 
 
 const columns = [
@@ -63,7 +65,7 @@ const closeDialog = () =>{
 }
 const submitForm = () => {
     if (isEditing.value){
-        form.put(route('', form.id), {
+        form.put(route('admin.AddTeacher.edit', form.id), {
             onSuccess: () =>{
                 closeDialog()
                 Swal.fire('Success!', 'Teacher updated successfully.','success')
@@ -73,7 +75,7 @@ const submitForm = () => {
             }
         })
     } else {
-        form.post(route(''), {
+        form.post(route('admin.AddTeacher.store'), {
             onSuccess: ()  => {
                 closeDialog()
                 Swal.fire('Success!', 'Teacher Added succefully.', 'success')
@@ -83,7 +85,9 @@ const submitForm = () => {
             }
         })
     }
-    const deletTeacher = (teacher) => {
+    
+}
+const deletTeacher = (teacher) => {
     Swal.fire({
         title: 'Are you sure you want to delete this teacher!',
         text: "You won't be able to revert this",
@@ -95,7 +99,7 @@ const submitForm = () => {
 
     }).then((result)=> {
         if(result.isConfirmed){
-            form.delete(route(), {
+            form.delete(route('admin.AddTeacher.destroy', teacher.id), {
                 onSuccess: () => {
                     Swal.fire(
                         'Deleted!',
@@ -113,6 +117,7 @@ const submitForm = () => {
             })
         }
     })
+
 
 }
 const editTeacher = (teacher) =>{
@@ -135,10 +140,13 @@ const editTeacher = (teacher) =>{
   
   isDialogOpen.value =        true
 }
+const viewTeacher = (teacher) => {
+    router.visit(route('admin.AddTeacher.show', teacher.id));
 }
 
 </script>
 <template>
+    <AdminLayout>
     
         <v-container>
             <v-row class="mb-4">
@@ -159,88 +167,102 @@ const editTeacher = (teacher) =>{
                 </v-card-title>
                 <v-card-text>
                     <v-form @submit.prevent="submitForm">
-                        <v-row>
-                            <v-col cols="12" md="6" lg="4" sm="3">
+                        <v-row dense>
+                            <v-col cols="12" md="6">
                                 <v-text-field
                                     v-model="form.first_name"
                                     label="First Name"
                                     required
                                     :error-messages="errors.first_name"
+                                    outlined
                                 />
                             </v-col>
-                            <v-col cols="12" md="6" lg="4" sm="3">
+                            <v-col cols="12" md="6">
                                 <v-text-field
                                     v-model="form.last_name"
                                     label="Last Name"
                                     required
                                     :error-messages="errors.last_name"
+                                    outlined
                                 />
                             </v-col>
-                            <v-col cols="12" md="9" lg="4" sm="3">
+                            <v-col cols="12" md="6">
                                 <v-text-field
                                     v-model="form.Date_Of_Birth"
-                                    label="Date Of Birth"
+                                    label="Date of Birth"
+                                    type="date"
                                     required
                                     :error-messages="errors.Date_Of_Birth"
+                                    outlined
                                 />
                             </v-col>
-                            <v-col cols="12" md="6" lg="4" sm="3">
+                            <v-col cols="12" md="6">
                                 <v-text-field
                                     v-model="form.national_id"
-                                    label="National Id "
+                                    label="National ID"
                                     required
                                     :error-messages="errors.national_id"
-                                
+                                    outlined
                                 />
                             </v-col>
-                            <v-col cols="12" md="6" lg="4" sm="3">
+                            <v-col cols="12" md="6">
                                 <v-text-field
                                     v-model="form.email"
-                                    label="Email "
+                                    label="Email"
+                                    type="email"
                                     required
                                     :error-messages="errors.email"
-                                
+                                    outlined
                                 />
                             </v-col>
-                            <v-col cols="12" md="6" lg="4" sm="3">
+                            <v-col cols="12" md="6">
                                 <v-text-field
                                     v-model="form.phone"
-                                    label="Phone Number "
+                                    label="Phone Number"
                                     required
                                     :error-messages="errors.phone"
-                                
+                                    outlined
                                 />
                             </v-col>
-                            <v-col cols="12" md="6" lg="4" sm="3">
+                            <v-col cols="12">
                                 <v-textarea
-                                    v-model="form.address" 
+                                    v-model="form.address"
                                     label="Address"
                                     required
                                     :error-messages="errors.address"
-                                
+                                    outlined
+                                    rows="2"
                                 />
                             </v-col>
-                            <v-col cols="12" md="6" lg="4" sm="3">
-                                <v-select v-model="form.gender"  multiple></v-select>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                    <option>Other</option>
+                            <v-col cols="12" md="6">
+                                <v-select
+                                    v-model="form.gender"
+                                    :items="['Male', 'Female', 'Other']"
+                                    label="Gender"
+                                    required
+                                    :error-messages="errors.gender"
+                                    outlined
+                                />
                             </v-col>
-                            <v-col cols="12" md="6" lg="4" sm="3">
-                                <v-select v-model="form.department" multiple></v-select>
-                                    <option>Science</option>
-                                    <option>Arts</option>
-                                    <option>Languages</option>
-                                    <option>commercials</option>
+                            <v-col cols="12" md="6">
+                                <v-select
+                                    v-model="form.department"
+                                    :items="['Science', 'Arts', 'Languages', 'commercials']"
+                                    label="Department"
+                                    
+                                    
+                                    :error-messages="errors.department"
+                                    outlined
+                                />
                             </v-col>
-                            <v-col cols="12" md="6" lg="4" sm="3">
+                            <v-col cols="12" md="6">
                                 <v-text-field
                                     v-model="form.subject"
                                     label="Subjects"
                                     required
                                     :error-messages="errors.subject"
+                                    outlined
                                 />
-
                             </v-col>
                         </v-row>
                     </v-form>
@@ -281,6 +303,7 @@ const editTeacher = (teacher) =>{
             </v-data-table>
         </div>
         </v-container>
+    </AdminLayout>
     
 
 </template>

@@ -13,13 +13,13 @@ const menues = ref([
     },
     {
         name: "Add Staff",
-        
+        path: route('admin.AddTeacher.index'),
         icon: "mdi-account-cog",
         id: 2,
     },
     {
         name: "Add Students",
-        
+        path: route('admin.dash'),
         icon:"mdi-account-multiple",
         id: 3,
     },
