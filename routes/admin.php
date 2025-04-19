@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use App\Http\Middleware\isAdmin;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\KlassController;
 
 
 Route::group([
@@ -13,6 +14,7 @@ Route::group([
 ], function(){
     Route::get('/Dashboard',[AdminDashboardController::class, 'index'])->name('dash');
     Route::resource('/AddTeacher',TeacherController::class, );
+    Route::resource('/Klass',KlassController::class, );
 
  
 });

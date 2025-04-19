@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('klasses', function (Blueprint $table) {
             $table->id();
             $table->string('class_name');
+            $table->year('year')->default(date('Y'));
+            $table->enum('department',['Science', 'Arts', 'Languages', 'commercials'])->default('Science');
+            $table->json('teachers')->nullable()->change();
             $table->foreignId('teacher_id')->nullable();
             $table->timestamps();
         });

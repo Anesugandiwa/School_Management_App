@@ -25,6 +25,7 @@ const menues = ref([
     },
     {
         name: "Manage Classes",
+        path:route('admin.Klass.index'),
         icon: "mdi-google-classroom",
         id: 4,
     },

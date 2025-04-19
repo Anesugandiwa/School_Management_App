@@ -3,7 +3,7 @@
 namespace App\Models;
 use Str;
 use Illuminate\Support\Facades\Hash;
-
+use App\Models\Klass;
 use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
@@ -38,5 +38,9 @@ class Teacher extends Model
             // If you want to store the plaintext temporarily (not recommended)
             // $teacher->plain_password = $basePassword . $randomDigits;
         });
+    }
+
+    public function klass(){
+        return $this->hasMany(Klass::class);
     }
 }
