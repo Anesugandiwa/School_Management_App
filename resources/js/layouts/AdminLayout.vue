@@ -19,7 +19,7 @@ const menues = ref([
     },
     {
         name: "Add Students",
-        path: route('admin.dash'),
+        path: route('admin.AddStudent.index'),
         icon:"mdi-account-multiple",
         id: 3,
     },
@@ -31,6 +31,7 @@ const menues = ref([
     },
     {
         name: "Manage Subjects",
+        path: route('admin.Subject.index'),
         icon: "mdi-book-open-page-variant",
         id: 5,
     },
