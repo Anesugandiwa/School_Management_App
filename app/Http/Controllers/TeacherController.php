@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Teacher;
+use App\Models\Subject;
 
 class TeacherController extends Controller
 {
     public function index(){
-        $teachers = Teacher::all();
+        $teachers = Teacher::with(['subjects'])->get();
         return inertia('Admin/AddTeacher',[
             'teachers' => $teachers,
+            'subjects' => Subject::all(),
         ]);
     }
 
@@ -29,7 +31,9 @@ class TeacherController extends Controller
             'phone'         =>'required|string|min:10|max:15|unique:teachers,phone',
             'address'       =>'required|string|max:500',
             'department'    =>'nullable|in:Science,Arts,Languages,commercials',
+            'subjects'      =>'required|array',
             'password'      =>'nullable|string|min:8',
+
 
         ]);
         $teacher = Teacher::firstOrNew(['id' =>$request->id]);
@@ -43,10 +47,12 @@ class TeacherController extends Controller
         $teacher->phone               = $request->phone;
         $teacher->address             = $request->address;
         $teacher->department          = $request->department;
+
         $teacher->password             = $request->password;
 
 
         $teacher->save();
+        $teacher->subjects()->sync($request->subjects);
 
         return redirect(route('admin.AddTeacher.index'));
 

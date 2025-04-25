@@ -7,7 +7,7 @@ const drawer = ref(null)
 const menues = ref([
     {
         name: "Dashboard",
-        
+        path: route('admin.dash'),
         icon: "mdi-monitor-dashboard",
         id: 1,
     },

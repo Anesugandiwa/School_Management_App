@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('contact');
             $table->string('nationality');
-            $table->string('klass');
+            $table->foreignId('klass_id')->nullable();
             $table->timestamps();
         });
     }

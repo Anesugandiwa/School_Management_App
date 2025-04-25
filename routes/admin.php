@@ -15,9 +15,12 @@ Route::group([
     'middleware' =>[App\Http\Middleware\isAdmin::class,]
 ], function(){
     Route::get('/Dashboard',[AdminDashboardController::class, 'index'])->name('dash');
-    Route::resource('/AddTeacher',TeacherController::class, );
+    Route::resource('/AddTeacher',TeacherController::class, )->parameters([
+        'AddTeacher' =>'teacher'
+    ]);
     Route::resource('/Klass',KlassController::class, );
-    Route::resource('/AddStudent',StudentController::class, );
+    Route::resource('/AddStudent',StudentController::class, )->parameters([
+        'AddStudent' => 'student'  ]);
     Route::resource('/Subject',SubjectController::class, );
 
  

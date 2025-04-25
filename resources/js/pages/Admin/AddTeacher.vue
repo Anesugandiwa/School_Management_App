@@ -1,8 +1,20 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted} from 'vue'
 import { useForm } from '@inertiajs/vue3'
 import AdminLayout from '@/layouts/AdminLayout.vue';
 import Swal from 'sweetalert2'
+import axios from 'axios'
+
+const subjectList = ref([]);
+onMounted(async ()=>{
+    try {
+        const resp =await axios.get(route('admin.Subject.index'))
+        subjectList.value = resp.value
+    } catch (error){
+        console.error('error when fetching Subjects', error)
+    }
+
+})
 
 
 const columns = [
@@ -10,7 +22,7 @@ const columns = [
     { key: 'first_name', title: 'First Name' },
     { key: 'last_name', title: 'Last Name'  },
     { key: 'department',  title: 'Department'},
-    { key: 'subject',  title: 'Subject'},
+    { key: 'subjects',  title: 'Subject'},
     { key: 'actions',  title: 'Actions'  },
 ]
 
@@ -26,7 +38,7 @@ const form =useForm({
     department: '',
     password:'',
     user_id: '',
-    subject: '',
+    subjects: null,
     klass_id: ''
 });
 const errors = ref({
@@ -40,7 +52,7 @@ const errors = ref({
     address: '',
     department: '',
     password: '',
-    subject: '',
+    subjects: '',
 
     
 })
@@ -256,13 +268,16 @@ const viewTeacher = (teacher) => {
                                 />
                             </v-col>
                             <v-col cols="12" md="6">
-                                <v-text-field
-                                    v-model="form.subject"
-                                    label="Subjects"
-                                    required
-                                    :error-messages="errors.subject"
-                                    outlined
-                                />
+                                <v-select
+                                        v-model="form.subjects"
+                                        :items="$page.props.subjects"
+                                        item-title="name"
+                                        item-value="id"
+                                        label="Subjects"
+                                        multiple
+                                        :error-messages="errors.subjects"
+                                    />
+                           
                             </v-col>
                         </v-row>
                     </v-form>
@@ -285,6 +300,12 @@ const viewTeacher = (teacher) => {
                     :items="$page.props.teachers"
                     :search="search"
                 >
+                <template v-slot:item.subjects="{item}">
+                    <v-chip v-if="item.subjects" v-for="subject in item.subjects" :key="subject.id">
+                        {{ subject.name }}
+                    </v-chip>
+
+                </template>
 
 
                 <template v-slot:item.actions="{ item }">

@@ -2,7 +2,20 @@
 import AdminLayout from '@/layouts/AdminLayout.vue';
 import { useForm } from '@inertiajs/vue3'
 import Swal from 'sweetalert2';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+
+const classList = ref([]);
+
+onMounted( async() => {
+    try{
+        const response = await axios.get(route('admin.Klass.index'))
+        classList.value = response.data
+    } catch (error) {
+        console.error('error whilist fetching the class', error)
+
+    }
+})
 
 const form = useForm({
     name: '',
@@ -12,7 +25,7 @@ const form = useForm({
     address:'',
     contact:'',
     nationality:'',
-    klass:''
+    klasses: null,
 
 })
 const errors = ref({
@@ -23,7 +36,7 @@ const errors = ref({
         address:'',
         contact:'',
         nationality:'',
-        klass:'',
+        klasses:'',
     })
 const columns = [
     {key:'id', title: 'ID'},
@@ -185,39 +198,22 @@ const editStudent = (student) => {
                                         prepend-inner-icon="mdi-gender-male-female"
                                         required
                                     />
-                                    </v-col>
-                                    <v-col cols="12" md="6">
-                                        <v-menu
-                                            ref="menu"
-                                            v-model="datePicker"
-                                            :close-on-content-click="false"
-                                            transition="scale-transition"
-                                            offset-y
-                                            min-width="auto"
-                                        >
-                                        <template v-slot:activator="{ on, attrs }">
-                                            <v-text-field
-                                            v-model="form.date_of_birth"
-                                            label="Date of Birth"
-                                            placeholder="YYYY-MM-DD"
-                                            :error-messages="errors.date_of_birth"
-                                            outlined
-                                            dense
-                                            prepend-inner-icon="mdi-calendar"
-                                            readonly
-                                            v-bind="attrs"
-                                            v-on="on"
-                                            required
-                                            />
-                                        </template>
-                                        <v-date-picker
-                                            v-model="form.date_of_birth"
-                                            no-title
-                                            scrollable
-                                            @input="datePicker = false"
-                                        />
-                                    </v-menu>
                                 </v-col>
+                                <v-col cols="12" md="6">
+                                    <v-text-field
+                                        v-model="form.date_of_birth"
+                                        label="Date of Birth"
+                                        placeholder="YYYY-MM-DD"
+                                        :error-messages="errors.date_of_birth"
+                                        outlined
+                                        dense
+                                        prepend-inner-icon="mdi-calendar"
+                                        required
+                                        hint="Enter date in YYYY-MM-DD format"
+                                        persistent-hint
+                                    />
+                                </v-col>
+
                                 <v-col cols="12">
                                     <v-text-field
                                         v-model="form.address"
@@ -259,14 +255,17 @@ const editStudent = (student) => {
                                 </v-col>
                                 <v-col cols="12" md="6">
                                     <v-select
-                                        v-model="form.klass"
+                                        v-model="form.klasses"
                                         label="Class"
-                                        :items="['Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5']"
+                                        :items="$page.props.klasses"
+                                        item-title="class_name"
+                                        item-value="id"
                                         placeholder="Select Class"
-                                        :error-messages="errors.klass"
+                                        :error-messages="errors.klasses"
                                         outlined
                                         dense
                                         prepend-inner-icon="mdi-school"
+                                        clearable
                                     />
                                 </v-col>
                             </v-row>
@@ -288,6 +287,13 @@ const editStudent = (student) => {
                     :items="$page.props.students"
                     :search="search"
                 >
+                <template v-slot:item.klass="{item}">
+                    <v-chip v-if="item.klass">
+                        {{ item.klass.class_name }}
+
+                    </v-chip>
+
+                </template>
                 <template v-slot:item.actions="{item}">
                     <div class="d-flex">
                         <v-btn color="info" class="mx-1 no-uppercase" @click="viewStudent(item)">

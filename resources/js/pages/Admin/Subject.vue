@@ -10,12 +10,28 @@ const isEditing = ref(false)
 const form = useForm({
     id: null,
     name: '',
-    teacher_id: '',
+    // teacher_id: '',
+    teacher: '', 
     is_optional: false,
     department: '',
 })
 
-const errors = ref({})
+const errors = ref({
+    name: '',
+    // teacher_id: '',
+    teacher: '',
+    is_optional: '',
+    department: '',
+
+
+})
+
+const columns = [
+    {key: 'id', title:'ID'},
+    {key: 'name', title: 'Subject Name'},
+    {key:'department', title: 'Department'},
+    {key:'actions', title: 'Actions'},
+]
 
 
 
@@ -32,7 +48,7 @@ const closeDialog = () => {
 
 const submitForm = () => {
     if (isEditing.value) {
-        form.put(route('admin.subjects.update', form.id), {
+        form.put(route('admin.Subject.update', form.id), {
             onSuccess: () => {
                 closeDialog()
                 Swal.fire('Updated!', 'Subject updated successfully.', 'success')
@@ -42,7 +58,7 @@ const submitForm = () => {
             }
         })
     } else {
-        form.post(route('admin.subjects.store'), {
+        form.post(route('admin.Subject.store'), {
             onSuccess: () => {
                 closeDialog()
                 Swal.fire('Success!', 'Subject added successfully.', 'success')
@@ -62,6 +78,41 @@ const editSubject = (subject) => {
     form.department = subject.department
     isEditing.value = true
     isDialogOpen.value = true
+}
+const deleteSubject = (subject) =>{
+    Swal.fire({
+        title: 'Are you sure you want to delete this Student!',
+        text: "You won't be able to revert this",
+        icon:'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((resultg) => {
+        if (resultg.isConfirmed){
+            form.delete(route('admin.Subject.destroy', subject.id),{
+                preserveScroll: true,
+                onSuccess: () => {
+                    Swal.fire(
+                        'Deleted!',
+                        'Student has been deleted.',
+                        'success'
+                    );
+                },
+                onError: () => {
+                    Swal.fire(
+                        'Error!',
+                        'Something went wrong.',
+                        'error'
+                    );
+                }
+
+            })
+        
+        }
+    })
+
+    
 }
 </script>
 
@@ -97,7 +148,7 @@ const editSubject = (subject) => {
                                 outlined
                             />
 
-                            <v-select
+                            <!-- <v-select
                                 v-model="form.teacher_id"
                                 :items="teachers"
                                 item-value="id"
@@ -107,6 +158,12 @@ const editSubject = (subject) => {
                                 prepend-inner-icon="mdi-account"
                                 dense
                                 outlined
+                            /> -->
+                            <v-text-field
+                            v-model="form.teacher"
+                            label="Teacher"
+                            placeholder="teacher"
+                            outlined
                             />
 
                             <v-select
@@ -136,7 +193,30 @@ const editSubject = (subject) => {
                 </v-card>
             </v-dialog>
 
-            <!-- You can add a v-data-table below here to list subjects -->
+            <v-data-table
+                :headers="columns"
+                :items="$page.props.subjects"
+                :search
+            >
+            <template v-slot:item.actions ="{item}">
+                <div class="d-flex">
+                    <v-btn color="info" class="mx-1 no-uppercase" @click="viewStudent(item)">
+                        View
+
+                    </v-btn>
+                    <v-btn class="mx-1 no-uppercase" @click="editSubject(item)">
+                        Edit
+
+                    </v-btn>
+                    <v-btn color="error" class="mx-1 no-uppercase" @click="deleteSubject(item)">
+                        Delete
+                    </v-btn>
+
+                </div>
+
+            </template>
+
+            </v-data-table>
         </v-container>
     </AdminLayout>
 </template>

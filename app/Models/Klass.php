@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Models\Teacher;
+use App\Models\Student;
 use Illuminate\Database\Eloquent\Model;
 
 class Klass extends Model
@@ -16,4 +17,9 @@ class Klass extends Model
     public function teacher(){
         return $this->belongsTo(Teacher::class);
     }
+
+    public function student(){
+        return $this->hasMany(Student::class);
+    }
+
 }

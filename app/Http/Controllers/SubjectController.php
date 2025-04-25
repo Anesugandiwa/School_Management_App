@@ -12,7 +12,10 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        return inertia('Admin/Subject');
+        $subjects = Subject::all();
+        return inertia('Admin/Subject',[
+            'subjects' => $subjects,
+        ]);
     }
 
     /**
@@ -28,7 +31,23 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'teacher' => 'required',
+            'is_optional' => 'nullable',
+            'department' =>'required',
+
+        ]);
+        $subject = Subject::firstOrnew(['id' =>$request->id]);
+
+        $subject->name = $request->name;
+        $subject->teacher = $request->teacher;
+        $subject->is_optional = $request->is_optional;
+        $subject->department = $request->department;
+
+        $subject->save();
+
+        return redirect(route('admin.Subject.index'));
     }
 
     /**

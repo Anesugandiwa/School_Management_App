@@ -4,6 +4,7 @@ namespace App\Models;
 use Str;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Klass;
+use App\Models\Subject;
 use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
@@ -21,7 +22,7 @@ class Teacher extends Model
         'department',
         'password',
         'user_id',
-        'subject',
+        'subject_id',
         'klass_id'
     ];
 
@@ -42,5 +43,9 @@ class Teacher extends Model
 
     public function klass(){
         return $this->hasMany(Klass::class);
+    }
+
+    public function subjects(){
+        return $this->belongsToMany(Subject::class);
     }
 }

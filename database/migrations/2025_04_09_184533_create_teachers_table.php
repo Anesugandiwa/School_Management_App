@@ -24,7 +24,7 @@ return new class extends Migration
             $table->enum('department',['Science', 'Arts', 'Languages', 'commercials'])->default('Science');
             $table->string('password');
             $table->foreignId('user_id')->nullable();
-            $table->string('subject')->nullable();
+            $table->json('subjects')->nullable()->change();
             $table->foreignId('klass_id')->nullable();
             $table->timestamps();
         });

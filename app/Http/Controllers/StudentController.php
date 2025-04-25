@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\klass;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -12,9 +13,10 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::all();
+        $students = Student::with('klass')->get();
         return inertia('Admin/AddStudent',[
             'students' => $students,
+            'klasses' => klass::all(),
 
         ]);
     }
@@ -41,7 +43,7 @@ class StudentController extends Controller
             'address' => "required",
             'contact' => "required",
             'nationality' =>"required",
-            'klass' => "nullable",
+            'klasses' => "required|exists:klasses,id",
         ]);
         $student = Student::firstOrnew(['id' =>$request->id]);
 
@@ -52,7 +54,7 @@ class StudentController extends Controller
         $student->address           = $request->address;
         $student->contact           = $request->contact;
         $student->nationality       = $request->nationality;
-        $student->klass             = $request->klass;
+        $student->klass_id             = $request->klasses;
 
         $student->save();
 
