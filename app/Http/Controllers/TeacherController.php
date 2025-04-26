@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Teacher;
 use App\Models\Subject;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class TeacherController extends Controller
 {
@@ -36,8 +38,20 @@ class TeacherController extends Controller
 
 
         ]);
-        $teacher = Teacher::firstOrNew(['id' =>$request->id]);
 
+        $plainPassword = $request->first_name;
+        
+        $user = User::create([
+            'name' => $request->first_name . ' ' . $request->last_name,
+            'email' => $request->email,
+            'email_verified_at' => now(),
+            'password' => Hash::make($plainPassword),
+            'role' => 'teacher',
+            
+        ]);
+
+        $teacher = new Teacher();
+        $teacher->user_id = $user->id;
         $teacher->first_name          = $request->first_name;
         $teacher->last_name           = $request->last_name;
         $teacher->gender              = $request->gender;
@@ -48,7 +62,9 @@ class TeacherController extends Controller
         $teacher->address             = $request->address;
         $teacher->department          = $request->department;
 
-        $teacher->password             = $request->password;
+        // $teacher->password             = $request->password;
+
+
 
 
         $teacher->save();

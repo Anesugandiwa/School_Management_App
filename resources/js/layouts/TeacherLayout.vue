@@ -8,12 +8,17 @@ const menues = ref([
     {
         name: "Dashboard",
         icon: "mdi-monitor-dashboard",
-        // path: route('teacher.dashboard'),
+        path: route('teacher.dis'),
+    },
+    {
+        name: "Profile",
+        icon: "mdi-chart-line",
+        path: route('teacher.profile'),
     },
     {
         name: "My Subjects",
         icon: "mdi-book-open-page-variant",
-        // path: route('teacher.subjects'),
+        path: route('teacher.klass'),
     },
     {
         name: "Exams",
@@ -23,7 +28,7 @@ const menues = ref([
     {
         name: "Reports",
         icon: "mdi-chart-line",
-        // path: route('teacher.reports'),
+        path: route('teacher.teachersub'),
     },
 ])
 

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('address');
             $table->enum('department',['Science', 'Arts', 'Languages', 'commercials'])->default('Science');
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->foreignId('user_id')->nullable();
             $table->json('subjects')->nullable()->change();
             $table->foreignId('klass_id')->nullable();
