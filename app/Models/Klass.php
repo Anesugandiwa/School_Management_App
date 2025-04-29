@@ -3,6 +3,7 @@
 namespace App\Models;
 use App\Models\Teacher;
 use App\Models\Student;
+use App\Models\Subject;
 use Illuminate\Database\Eloquent\Model;
 
 class Klass extends Model
@@ -12,6 +13,7 @@ class Klass extends Model
         'year',
         'department',
         'teacher_id',
+        'subject_id',
     ];
 
     public function teacher(){
@@ -20,6 +22,10 @@ class Klass extends Model
 
     public function student(){
         return $this->hasMany(Student::class);
+    }
+    public function subjects(){
+        return $this->belongsToMany(Subject::class);
+
     }
 
 }

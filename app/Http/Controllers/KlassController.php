@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 use App\Models\Klass;
 use App\Models\Teacher;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class KlassController extends Controller
 {
     public function index(){
-        $klasses = Klass::with('teacher')->get();
+        $klasses = Klass::with('teacher','subjects')->get();
         return inertia('Admin/Klass',[
             'klasses' => $klasses,
-            'teachers' =>Teacher::all() 
+            'teachers' =>Teacher::all(),
+            'subjects' => Subject::all()
         ]);
     }
 
@@ -29,6 +31,7 @@ class KlassController extends Controller
             'year'          =>'required',
             'department'    =>'nullable|in:Science,Arts,Languages,commercials',
             'teachers'      =>'required|exists:teachers,id',
+            'subjects'      =>'required|array',
         ]);
         $klass = Klass::firstOrNew(['id' =>$request->id]);
 
@@ -36,8 +39,11 @@ class KlassController extends Controller
         $klass->year = $request->year;
         $klass->department = $request->department;
         $klass->teacher_id = $request->teachers;
+        // $klass->subject_id = $request->klasses;
 
         $klass->save();
+        $klass->subjects()->sync($request->subjects);
+
 
         
 

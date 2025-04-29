@@ -18,6 +18,7 @@ return new class extends Migration
             $table->enum('department',['Science', 'Arts', 'Languages', 'commercials'])->default('Science');
             $table->json('teachers')->nullable()->change();
             $table->foreignId('teacher_id')->nullable();
+            $table->json('subjects')->nullable()->change();
             $table->timestamps();
         });
     }

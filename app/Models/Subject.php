@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Models\Teacher;
+use App\Models\Klass;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,5 +18,9 @@ class Subject extends Model
 
     public function teachers(){
         return $this->belongsToMany(Teacher::class, 'subject_teacher');
+    }
+
+    public function klasses(){
+        return $this->belongsToMany(Klass::class);
     }
 }

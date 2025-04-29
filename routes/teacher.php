@@ -5,6 +5,7 @@ use App\Http\Controllers\TeacherDashboardController;
 use App\Http\Controllers\TeacherKlassController;
 use App\Http\Controllers\TeacherSubjectController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MarksController;
 use App\Http\Middleware\isTeacher;
 
 Route::group([
@@ -17,6 +18,8 @@ Route::group([
     Route::get('/klass', [TeacherDashboardController::class, 'klass'])->name('klass');
     Route::get('/subjects', [TeacherSubjectController::class, 'index'])->name('teachersub');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/addmarks', [MarksController::class, 'index'])->name('addmarks');
+    Route::post('/addmarks', [MarksController::class, 'fetchStudents'])->name('fetchStudents');
   
 });
 

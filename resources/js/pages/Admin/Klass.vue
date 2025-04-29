@@ -6,6 +6,7 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 
 const teachersList = ref([])
+const subjectsList = ref([])
 onMounted(async() => {
     try {
         const response = await axios.get(route('admin.AddTeacher.index'))
@@ -14,26 +15,37 @@ onMounted(async() => {
         console.error('error while fetching teachers', error)
     }
 })
+onMounted(async()=> {
+    try {
+        const res = await axios.get(route('admin.Subject.index'))
+        subjectsList.value = res.data
+    } catch (error){
+        console.error('erro while fetching subjects', error)
+    }
+})
 const columns = [
     { key: 'id', title: 'ID' },
     { key: 'class_name', title: 'Class Name' },
     { key: 'year', title: 'Year'  },
     { key: 'department',  title: 'Department'},
     { key: 'teacher',  title: 'Teacher'},
+    {key: 'subjects', title: 'Subjects'},
     { key: 'actions',  title: 'Actions'  },
 ]
 const form = useForm({
     class_name: '',
     year: new Date().getFullYear(),
     department: '',
-    teachers: null
+    teachers: null,
+    subjects: null,
 })
 
 const errors = ref({
     class_name: '',
     year: '',
     department: '',
-    teachers: ''
+    teachers: '',
+    subjects:''
 })
 
 const isDialogOpen = ref(false)
@@ -174,7 +186,7 @@ const viewClass = (klass) => {
                                         outlined
                                     />
                                 </v-col>
-                                <v-col cols="12">
+                                <v-col cols="12" md="6">
                                     <v-select
                                         v-model="form.teachers"
                                         :items="$page.props.teachers"
@@ -185,6 +197,20 @@ const viewClass = (klass) => {
                                         outlined
                                         clearable
                                     />
+                                </v-col>
+                                <v-col cols="12" md="6">
+                                    <v-select
+                                        v-model="form.subjects"
+                                        :items ="$page.props.subjects"
+                                        item-title="name"
+                                        item-value="id"
+                                        label="select subject(s)"
+                                        :error-messages="errors.subjects"
+                                        outlined
+                                        clearable
+                                        multiple
+                                    />
+
                                 </v-col>
                             </v-row>
                         </v-form>
@@ -209,6 +235,13 @@ const viewClass = (klass) => {
                         {{ item.teacher.first_name }}
                     </v-chip>
                 </template>
+                <template v-slot:item.subjects="{item}">
+                    <v-chip v-if="item.subjects" v-for="subject in item.subjects" :key="subject.id">
+                        {{ subject.name }}
+                    </v-chip>
+
+                </template>
+
 
 
                 <template v-slot:item.actions="{ item }">
