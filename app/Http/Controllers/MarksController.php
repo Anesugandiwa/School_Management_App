@@ -9,41 +9,34 @@ use Illuminate\Http\Request;
 
 class MarksController extends Controller
 {
-    public function index(){
-        // $teacher = Teacher::where('user_id', auth()->id())->with('subjects')->first();
-        $teacher = auth()->user();
 
-        return inertia('Teacher/addmarks', [
-            'klasses' => Klass::all(),
-            // 'subjects' => $teacher->subjects,
-        ]);
-    }
+    public function index(Request $request)
+{
+    $teacher = auth()->user()->teacher;
+    $subjects = $teacher ? $teacher->subjects : [];
+    $klasses = $teacher?->klasses ?? [];
 
-    // public function fetchStudents(Request $request){
-    //     request->validate([
-    //         'klass_id' => 'required|exists:klasses,id',
-    //         'subject_id' => 'required|exists:subjects,id',
+    return inertia('Teacher/addmarks', [
+        'klasses' => $klasses,
+        'subjects' => $subjects,
+    ]); 
+}
 
-    //     ]);
-    //     $students = Student::where('klass_id', $request->klass_id)
-    //         ->whereHas('subjects', function($query) use ($request) {
-    //             $query->where('subject_id', $request->subject_id);
-    //         })
-    //         ->get();
-
-    //         return response()->json($students);
-
-    // }
-
-    public function fetchStudents(Request $request)
+public function fetchStudents(Request $request)
 {
     $request->validate([
         'klass_id' => 'required|exists:klasses,id',
-        
     ]);
 
-    $students = Student::where('klass_id', $request->klass_id)->get();
-
-    return response()->json($students);
+    $klass = Klass::find($request->klass_id);
+    
+    if ($klass) {
+        return response()->json($klass->students);
+    }
+    
+    return response()->json([]);
 }
+
+
+
 }

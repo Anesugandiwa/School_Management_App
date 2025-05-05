@@ -41,7 +41,7 @@ class Teacher extends Model
     //     });
     // }
 
-    public function klass(){
+    public function klasses(){
         return $this->hasMany(Klass::class);
     }
 

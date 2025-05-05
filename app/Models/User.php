@@ -61,4 +61,5 @@ class User extends Authenticatable
     public function klass(){
         return $this->hasMany(Klass::class);
     }
+    
 }

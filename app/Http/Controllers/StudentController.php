@@ -61,6 +61,27 @@ class StudentController extends Controller
         return redirect(route('admin.AddStudent.index'));
     }
 
+    public function fetchStudents(Request $request)
+    {
+    $request->validate([
+        'klass_id' => 'required|exists:klasses,id',
+        'subject_id' => 'required|exists:subjects,id',
+    ]);
+
+    $klass = Klass::with(['student'])->find($request->klass_id);
+
+    // Get students in that class
+    $students = $klass->student->map(function ($student) {
+        return [
+            'id' => $student->id,
+            'name' => $student->first_name,
+            // optionally return existing mark if you track marks elsewhere
+        ];
+    });
+
+    return response()->json($students);
+}
+
     /**
      * Display the specified resource.
      */

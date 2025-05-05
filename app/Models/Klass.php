@@ -20,7 +20,7 @@ class Klass extends Model
         return $this->belongsTo(Teacher::class);
     }
 
-    public function student(){
+    public function students(){
         return $this->hasMany(Student::class);
     }
     public function subjects(){
