@@ -26,6 +26,11 @@ const menues = ref([
         path: route('teacher.addmarks'),
     },
     {
+        name: "Upload Assignment",
+        icon: "mdi-book-open-page-variant",
+        path: route('teacher.assignment'),
+    },
+    {
         name: "Exams",
         icon: "mdi-file-document-edit",
         // path: route('teacher.exams'),

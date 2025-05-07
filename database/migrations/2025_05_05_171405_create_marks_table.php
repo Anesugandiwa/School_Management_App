@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('marks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id');
+            $table->foreignId('subject_id');
+            $table->foreignId('klass_id');
+            $table->string('exam_type')->nullable();
+            $table->string('term')->nullable();
+            $table->string('year')->nullable();
+            $table->decimal('marks', 5, 2)->nullable();
+            $table->decimal('total_marks', 5, 2)->nullable();
+            $table->string('grade')->nullable();
+            $table->text('remarks')->nullable();
             $table->timestamps();
         });
     }

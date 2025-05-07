@@ -3,6 +3,14 @@ import { ref, watch } from 'vue';
 import axios from 'axios';
 import TeacherLayout from '@/layouts/TeacherLayout.vue';
 import { usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
+import Swal from 'sweetalert2';
+
+const form = useForm({
+  klass_id: '',
+  subject_id: '',
+  marks:[],
+});
 
 const page = usePage();
 const klasses = page.props.klasses;
@@ -15,8 +23,25 @@ const loading = ref(false);
 const saveSuccess = ref(false);
 const saveError = ref(false);
 
+
 // Add a marks object to store student marks
 const studentMarks = ref({});
+
+const saveMarks = () => {
+  form.klass_id =   selectedKlass.value;
+  form.subject_id = selectedSubject.value;
+  form.marks = Object.values(studentMarks.value);
+
+  form.post(route('teacher.storemarks'), {
+    onSuccess: () => {
+      Swal.fire('Success!', 'Marks Saved successfully.', 'success')
+    },
+    onError: (newErrors) => {
+      errors.value = newErrors
+    }
+  })
+}
+
 
 const fetchStudents = async () => {
     if (selectedKlass.value) {

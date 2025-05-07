@@ -7,6 +7,7 @@ use App\Http\Controllers\TeacherSubjectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MarksController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\AssignmentController;
 use App\Http\Middleware\isTeacher;
 
 Route::group([
@@ -25,6 +26,8 @@ Route::group([
     Route::post('/addmarks', [StudentController::class, 'fetchStudents'])
     ->name('fetchStudents');
     Route::get('/fetch-students', [MarksController::class, 'fetchStudents'])->name('fetchStudents');
+    Route::post('/addmarks', [MarksController::class, 'store'])->name('storemarks');
+    Route::get('/assignment', [AssignmentController::class, 'index'])->name('assignment');
   
 });
 
