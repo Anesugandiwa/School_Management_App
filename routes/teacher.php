@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MarksController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Middleware\isTeacher;
 
 Route::group([
@@ -28,6 +29,11 @@ Route::group([
     Route::get('/fetch-students', [MarksController::class, 'fetchStudents'])->name('fetchStudents');
     Route::post('/addmarks', [MarksController::class, 'store'])->name('storemarks');
     Route::get('/assignment', [AssignmentController::class, 'index'])->name('assignment');
+
+    // Attendence controller
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('get');
+    Route::get('/get-students', [AttendanceController::class, 'getStudents'])->name('getStudents');
+    Route::post('/attendance', [AttendanceController::class, 'store'])->name('addAttendance');
   
 });
 

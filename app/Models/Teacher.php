@@ -26,20 +26,7 @@ class Teacher extends Model
         'klass_id'
     ];
 
-    // protected static function boot()
-    // {
-    //     parent::boot();
 
-    //     static::creating(function ($teacher) {
-    //         // Generate password from first name + random 4 digits
-    //         $basePassword = Str::slug($teacher->first_name); // Clean the name
-            
-    //         $teacher->password = Hash::make($basePassword);
-            
-    //         // If you want to store the plaintext temporarily (not recommended)
-    //         // $teacher->plain_password = $basePassword . $randomDigits;
-    //     });
-    // }
 
     public function klasses(){
         return $this->hasMany(Klass::class);

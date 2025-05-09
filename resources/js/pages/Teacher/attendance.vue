@@ -3,6 +3,7 @@ import { ref, watch } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import TeacherLayout from '@/layouts/TeacherLayout.vue';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const page = usePage();
 const klasses = page.props.klasses;
@@ -20,11 +21,11 @@ const form = useForm({
   records: []
 });
 
-const fetchStudents = async () => {
+const getStudents = async () => {
   if (selectedKlass.value) {
     loading.value = true;
     try {
-      const response = await axios.get(route('teacher.fetchStudents'), {
+      const response = await axios.get(route('teacher.getStudents'), {
         params: { klass_id: selectedKlass.value }
       });
       students.value = response.data;
@@ -43,14 +44,14 @@ const fetchStudents = async () => {
   }
 };
 
-watch(selectedKlass, fetchStudents);
+watch(selectedKlass, getStudents);
 
 const saveAttendance = () => {
   form.klass_id = selectedKlass.value;
   form.date = selectedDate.value;
   form.records = Object.values(attendance.value);
 
-  form.post(route('teacher.storeAttendance'), {
+  form.post(route('teacher.addAttendance'), {
     onSuccess: () => {
       Swal.fire('Success!', 'Attendance recorded.', 'success');
     },
@@ -90,8 +91,9 @@ const saveAttendance = () => {
         v-if="students.length"
         :headers="[
           { title: 'Student Name', key: 'name' },
+          { title: 'Student Surname', key: 'surname' },
           { title: 'Status', key: 'status' }
-        ]"
+        ]"untu
         :items="students"
       >
         <template v-slot:item.status="{ item }">
