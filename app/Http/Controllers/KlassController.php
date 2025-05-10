@@ -30,8 +30,8 @@ class KlassController extends Controller
             'class_name'    =>'required',
             'year'          =>'required',
             'department'    =>'nullable|in:Science,Arts,Languages,commercials',
-            'teachers'      =>'required|exists:teachers,id',
-            'subjects'      =>'required|array',
+            'teachers'      =>'nullable|exists:teachers,id',
+            'subjects'      =>'nullable|array',
         ]);
         $klass = Klass::firstOrNew(['id' =>$request->id]);
 

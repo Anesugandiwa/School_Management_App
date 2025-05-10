@@ -33,7 +33,7 @@ class SubjectController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'teacher' => 'required',
+            'teacher' => 'nullable',
             'is_optional' => 'nullable',
             'department' =>'required',
 

@@ -14,6 +14,7 @@ class TeacherController extends Controller
         $teachers = Teacher::with(['subjects'])->get();
         return inertia('Admin/AddTeacher',[
             'teachers' => $teachers,
+            
             'subjects' => Subject::all(),
         ]);
     }
@@ -33,7 +34,7 @@ class TeacherController extends Controller
             'phone'         =>'required|string|min:10|max:15|unique:teachers,phone',
             'address'       =>'required|string|max:500',
             'department'    =>'nullable|in:Science,Arts,Languages,commercials',
-            'subjects'      =>'required|array',
+            'subjects'      =>'nullable|array',
             'password'      =>'nullable|string|min:8',
 
 

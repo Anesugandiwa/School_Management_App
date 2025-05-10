@@ -14,8 +14,8 @@ class MarksController extends Controller
     public function index(Request $request)
 {
     $teacher = auth()->user()->teacher;
-    $subjects = $teacher ? $teacher->subjects : [];
-    $klasses = $teacher?->klasses ?? [];
+    $klasses = $teacher->assignedKlasses;
+    $subjects = $teacher->assignedSubjects;
 
     return inertia('Teacher/addmarks', [
         'klasses' => $klasses,

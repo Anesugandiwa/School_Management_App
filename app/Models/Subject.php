@@ -23,4 +23,10 @@ class Subject extends Model
     public function klasses(){
         return $this->belongsToMany(Klass::class);
     }
+    public function teacherKlasses()
+{
+    return $this->belongsToMany(Teacher::class, 'klass_subject_teacher')
+        ->withPivot('klass_id')
+        ->withTimestamps();
+}
 }

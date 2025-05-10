@@ -12,7 +12,7 @@ const menues = ref([
         id: 1,
     },
     {
-        name: "Add Staff",
+        name: "Add Teacher",
         path: route('admin.AddTeacher.index'),
         icon: "mdi-account-cog",
         id: 2,
@@ -32,6 +32,12 @@ const menues = ref([
     {
         name: "Manage Subjects",
         path: route('admin.Subject.index'),
+        icon: "mdi-book-open-page-variant",
+        id: 5,
+    },
+    {
+        name: "Assign Teacher",
+        path: route('admin.subjectTeacher.index'),
         icon: "mdi-book-open-page-variant",
         id: 5,
     },

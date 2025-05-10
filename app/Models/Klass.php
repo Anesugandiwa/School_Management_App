@@ -27,5 +27,11 @@ class Klass extends Model
         return $this->belongsToMany(Subject::class);
 
     }
+    public function subjectTeachers()
+    {
+        return $this->belongsToMany(Teacher::class, 'klass_subject_teacher')
+        ->withPivot('subject_id')
+        ->withTimestamps();
+    }
 
 }

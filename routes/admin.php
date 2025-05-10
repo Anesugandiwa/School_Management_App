@@ -7,6 +7,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\KlassController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\KlassSubjectTeacherController;
 
 
 Route::group([
@@ -22,6 +23,8 @@ Route::group([
     Route::resource('/AddStudent',StudentController::class, )->parameters([
         'AddStudent' => 'student'  ]);
     Route::resource('/Subject',SubjectController::class, );
+
+    Route::resource('/subjectTeacher', KlassSubjectTeacherController::class);
 
  
 });
