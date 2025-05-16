@@ -45,7 +45,20 @@ class StudentController extends Controller
             'nationality' =>"required",
             'klasses' => "required|exists:klasses,id",
         ]);
-        $student = Student::firstOrnew(['id' =>$request->id]);
+
+        $plainPassword = $request->name;
+
+        $user = User::create([
+            'name' => $request->name . ' ' . $request->surname,
+            'email' => $request->email,
+            'email_verified_at' => now(),
+            'password' => Hash::make($plainPassword),
+            'role' => 'student',
+            
+        ]);
+        
+        $student = new Student();
+        $student->user_id = $user->id;
 
         $student->name              = $request->name;
         $student->surname           = $request->surname;

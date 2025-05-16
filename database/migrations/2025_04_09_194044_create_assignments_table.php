@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('klass_id');
+            $table->foreignId('subject_id');
             $table->string('title');
             $table->text('description')->nullable();
             $table->date('due_date')->nullable();

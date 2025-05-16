@@ -12,9 +12,17 @@ const selectedKlass = ref('');
 const selectedSubject = ref('');
 const assignmentFile = ref(null);
 
+// const dueDate = ref(null);
+// const menu = ref(false);
+// const minDate = ref(new Date().toISOString().split('T')[0]);
+
+
 const form = useForm({
   klass_id: '',
   subject_id: '',
+  due_date: '',
+  title:'',
+  description:'',
   file: null,
 });
 
@@ -62,15 +70,66 @@ const uploadAssignment = () => {
             :disabled="!selectedKlass"
           />
         </v-col>
-      </v-row>
+        <v-col cols="12" md="6">
+          <v-text-field
+          v-model="form.title"
+          label="Title"
+          placeholder="Title"
+          />
 
-      <v-file-input
-        label="Select Assignment File"
-        accept=".pdf,.doc,.docx,.jpg,.png"
-        v-model="assignmentFile"
-        show-size
-        class="my-4"
-      />
+          
+
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-textarea
+          v-model="form.description"
+          label="Dscription"
+          placeholder="write Description"
+          />
+
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12" md="6">
+           <v-menu
+           ref="menu"
+           v-model="menu"
+           :close-on-content-click="false"
+           transition="scale-transition"
+           offset-y
+           min-width="auto"
+           >
+           <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="dueDate"
+              label="Due Date"
+              prepend-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+              outlined
+            />
+          </template>
+          <v-date-picker
+            v-model="dueDate"
+            :min="minDate"
+            @input="menu = false"
+          />
+        </v-menu>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-file-input
+            label="Select Assignment File"
+            accept=".pdf,.doc,.docx,.jpg,.png"
+            v-model="assignmentFile"
+            show-size
+            class="my-4"
+        />
+
+      </v-col>
+
+
+      </v-row>
 
       <v-btn
         color="primary"
