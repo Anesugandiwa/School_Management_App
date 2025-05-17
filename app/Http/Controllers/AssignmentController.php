@@ -28,13 +28,15 @@ class AssignmentController extends Controller
         ]);
 
         $assignment = Assignment::firstOrnew(['id'=>$request->id]);
+        $assignment->klass_id = $request->klass_id;
+        $assignment->subject_id = $request->subject_id;
         $assignment->title = $request->title;
         $assignment->description = $request->description;
         $assignment->due_date = $request->due_date;
 
         $assignment->save();
 
-        return redirect(route('teacher.assignment.index'));
+        return redirect(route('teacher.assignment'));
 
 
     }

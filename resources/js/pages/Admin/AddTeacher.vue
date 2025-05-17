@@ -267,7 +267,7 @@ const viewTeacher = (teacher) => {
                                     outlined
                                 />
                             </v-col>
-                            <v-col cols="12" md="6">
+                            <!-- <v-col cols="12" md="6">
                                 <v-select
                                         v-model="form.subjects"
                                         :items="$page.props.subjects"
@@ -278,7 +278,7 @@ const viewTeacher = (teacher) => {
                                         :error-messages="errors.subjects"
                                     />
                            
-                            </v-col>
+                            </v-col> -->
                         </v-row>
                     </v-form>
 

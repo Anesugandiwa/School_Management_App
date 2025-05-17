@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\klass;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -48,9 +50,13 @@ class StudentController extends Controller
 
         $plainPassword = $request->name;
 
+        $name = strtolower($request->name);
+        $emailName = preg_replace('/\s+/','',$name);
+        $email = $emailName. '@gmail.com';
+
         $user = User::create([
             'name' => $request->name . ' ' . $request->surname,
-            'email' => $request->email,
+            'email' => $email,
             'email_verified_at' => now(),
             'password' => Hash::make($plainPassword),
             'role' => 'student',
@@ -58,7 +64,7 @@ class StudentController extends Controller
         ]);
         
         $student = new Student();
-        $student->user_id = $user->id;
+        // $student->user_id = $user->id;
 
         $student->name              = $request->name;
         $student->surname           = $request->surname;

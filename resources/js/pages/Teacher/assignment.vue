@@ -12,14 +12,14 @@ const selectedKlass = ref('');
 const selectedSubject = ref('');
 const assignmentFile = ref(null);
 
-// const dueDate = ref(null);
-// const menu = ref(false);
-// const minDate = ref(new Date().toISOString().split('T')[0]);
+const menu = ref(false)
+const dueDate = ref(null)
 
+const minDate = new Date().toISOString().substr(0, 10)
 
 const form = useForm({
-  klass_id: '',
-  subject_id: '',
+  klass_id: null,
+  subject_id: null,
   due_date: '',
   title:'',
   description:'',
@@ -92,28 +92,27 @@ const uploadAssignment = () => {
       <v-row>
         <v-col cols="12" md="6">
            <v-menu
-           ref="menu"
+           
            v-model="menu"
            :close-on-content-click="false"
            transition="scale-transition"
            offset-y
            min-width="auto"
            >
-           <template v-slot:activator="{ on, attrs }">
+           <template #activator="{ props}">
             <v-text-field
               v-model="dueDate"
               label="Due Date"
               prepend-icon="mdi-calendar"
               readonly
-              v-bind="attrs"
-              v-on="on"
+              v-bind="props"
               outlined
             />
           </template>
           <v-date-picker
             v-model="dueDate"
             :min="minDate"
-            @input="menu = false"
+            @update:model-value="menu = false"
           />
         </v-menu>
       </v-col>

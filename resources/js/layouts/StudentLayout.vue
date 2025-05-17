@@ -13,7 +13,7 @@ const menues = ref([
     {
         name: "Profile",
         icon: "mdi-account-circle",
-        path: '',
+        path: route('student_profile'),
     },
     {
         name: "My Schedule",
@@ -59,10 +59,10 @@ function logout() {
                     <div>
                         <img height="55" src="/images/school.jpg" alt="Logo"/>
                     </div>
-                    <!-- <div>
+                    <div>
                         <b>{{ $page.props.auth.user.name }} </b><br />
                         <small>{{ $page.props.auth.user.email }}</small>
-                    </div> -->
+                    </div>
                 </div>
 
                 <v-divider />
@@ -86,9 +86,9 @@ function logout() {
                     <v-sheet class="bg-primary rounded-lg pa-1">
                         <div class="d-flex align-center justify-space-between">
                             <div>
-                                <!-- <h4 class="ml-1 d-flex align-center font-weight-semibold">
+                                <h4 class="ml-1 d-flex align-center font-weight-semibold">
                                     {{ $page.props.auth.user.name }}
-                                </h4> -->
+                                </h4>
                             </div>
                             <div>
                                 <v-btn

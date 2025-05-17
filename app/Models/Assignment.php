@@ -8,6 +8,7 @@ class Assignment extends Model
 {
     protected $fillable = [
         'klass_id',
+        'subject_id',
         'title',
         'description',
         'due_date'
