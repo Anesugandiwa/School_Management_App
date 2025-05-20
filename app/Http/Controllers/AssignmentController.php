@@ -15,6 +15,7 @@ class AssignmentController extends Controller
         return inertia('Teacher/assignment', [
             'klasses' => $klasses,
             'subjects' => $subjects,
+           
         ]); 
     }
 

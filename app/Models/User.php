@@ -61,5 +61,12 @@ class User extends Authenticatable
     public function klass(){
         return $this->hasMany(Klass::class);
     }
+
+    public function studentklass(){
+        return $this->belongsTo(Klass::class, 'klass_id');
+    }
+    public function student(){
+        return $this->hasOne(Student::class);
+    }
     
 }

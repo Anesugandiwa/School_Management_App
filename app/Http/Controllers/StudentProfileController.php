@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Assignment;
+use App\Models\Klass;
 use Illuminate\Http\Request;
 
 class StudentProfileController extends Controller
@@ -11,6 +12,7 @@ class StudentProfileController extends Controller
 
         return inertia('Students/studentprof',[
         'student' =>  $student,
+        'assignments' => $assignments
     ]);
 
     }
@@ -18,16 +20,17 @@ class StudentProfileController extends Controller
     public function assignment(){
         $student = auth()->user();
 
-        $assignments = Assignment::whereHas('klass.students', function($query) use ($student){
-            $query->where('user_id', $student->id);
-        })
-        >with(['class:id,name', 'teacher:id,name']) // Only select needed fields
-        ->latest()
-        ->get();
+        $klassId = $student->klass_id;
 
-        return response()->json([
+        $assignments = Assignment::where('klass_id', $klassId)
+            ->with(['teacher', 'subject','klass'])
+            ->latest()
+            ->get();
+        return inertia('Students/studentAssignment',[
             'assignments' => $assignments
         ]);
+
+
 
 
     }

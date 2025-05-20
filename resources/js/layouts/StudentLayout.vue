@@ -23,7 +23,7 @@ const menues = ref([
     {
         name: "Assignments",
         icon: "mdi-book-open-page-variant",
-        path: '',
+        path: route('stud_assignment'),
     },
     {
         name: "Grades",

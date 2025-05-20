@@ -29,7 +29,16 @@ const form = useForm({
 const uploadAssignment = () => {
   form.klass_id = selectedKlass.value;
   form.subject_id = selectedSubject.value;
+  form.due_date = dueDate.value;
   form.file = assignmentFile.value;
+
+  if (dueDate.value) {
+    const dateObj = new Date(dueDate.value);
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    form.due_date = `${year}-${month}-${day}`;
+  }
 
   form.post(route('teacher.uploadAssignment'), {
     forceFormData: true,

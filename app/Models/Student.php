@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Models\Klass;
+use App\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,10 +17,17 @@ class Student extends Model
         'contact',
         'nationality',
         'klass_id',
+        'user_id',
         
     ];
 
     public function klass(){
         return $this->belongsTo(Klass::class);
+    }
+
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
