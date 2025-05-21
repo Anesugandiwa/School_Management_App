@@ -12,7 +12,8 @@ class Assignment extends Model
         'subject_id',
         'title',
         'description',
-        'due_date'
+        'due_date',
+        'file_path'
     ];
 
     public function klass(){

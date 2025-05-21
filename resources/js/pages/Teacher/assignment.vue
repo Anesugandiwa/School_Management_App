@@ -100,32 +100,20 @@ const uploadAssignment = () => {
       </v-row>
       <v-row>
         <v-col cols="12" md="6">
-           <v-menu
-           
-           v-model="menu"
-           :close-on-content-click="false"
-           transition="scale-transition"
-           offset-y
-           min-width="auto"
-           >
-           <template #activator="{ props}">
-            <v-text-field
-              v-model="dueDate"
-              label="Due Date"
-              prepend-icon="mdi-calendar"
-              readonly
-              v-bind="props"
-              outlined
-            />
-          </template>
-          <v-date-picker
-            v-model="dueDate"
-            :min="minDate"
-            @update:model-value="menu = false"
+          <v-text-field
+            v-model="form.due_date"
+            label="Due Date"
+            placeholder="YYYY-MM-DD"
+            
+            outlined
+            dense
+            prepend-inner-icon="mdi-calendar"
+            required
+            hint="Enter date in YYYY-MM-DD format"
+            persistent-hint
           />
-        </v-menu>
-      </v-col>
-      <v-col cols="12" md="6">
+        </v-col>
+        <v-col cols="12" md="6">
         <v-file-input
             label="Select Assignment File"
             accept=".pdf,.doc,.docx,.jpg,.png"

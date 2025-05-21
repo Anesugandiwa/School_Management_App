@@ -43,6 +43,7 @@ const menues = ref([
     },
     {
         name: "Attendance",
+        path:route('admin.students_attendance'),
         icon: "mdi-calendar-check",
         id: 6,
     },

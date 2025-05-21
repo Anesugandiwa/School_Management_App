@@ -61,6 +61,7 @@ const getStatusText = (dueDate) => {
 
 
 <template>
+ 
   <studentLayout>
     <v-container>
       <!-- Upcoming Assignments -->
@@ -101,17 +102,33 @@ const getStatusText = (dueDate) => {
 
                   <v-list-item-title class="font-weight-medium">
                     {{ assignment.title }}
+                    <v-chip v-if="assignment.has_file" size="x-small" color="info" class="ml-2">
+                      <v-icon size="small" class="mr-1">mdi-file-document</v-icon>
+                      Document
+                    </v-chip>
                   </v-list-item-title>
 
                   <v-list-item-subtitle>
-                    <div>Class: {{ assignment.klass.klass_id }}</div>
+                    <div>Class: {{ assignment.klass?.klass_id || 'Unknown' }}</div>
                     <div>Due: {{ formatDate(assignment.due_date) }}</div>
                   </v-list-item-subtitle>
 
                   <template #append>
-                    <v-chip :color="getStatusColor(assignment.due_date)" size="small">
-                      {{ getStatusText(assignment.due_date) }}
-                    </v-chip>
+                    <div class="d-flex align-center">
+                      <v-btn
+                        v-if="assignment.has_file"
+                        icon="mdi-download"
+                        size="small"
+                        color="primary"
+                        variant="text"
+                        class="mr-2"
+                        :href="`/student/assignments/${assignment.id}/download`"
+                        @click.stop
+                      ></v-btn>
+                      <v-chip :color="getStatusColor(assignment.due_date)" size="small">
+                        {{ getStatusText(assignment.due_date) }}
+                      </v-chip>
+                    </div>
                   </template>
                 </v-list-item>
               </v-list>
@@ -125,7 +142,7 @@ const getStatusText = (dueDate) => {
         </v-col>
       </v-row>
 
-      <!-- Past Assignments -->
+      <!-- Past Assignments (similar updates) -->
       <v-row class="mt-4">
         <v-col cols="12">
           <v-card elevation="2">
@@ -150,15 +167,31 @@ const getStatusText = (dueDate) => {
 
                   <v-list-item-title>
                     {{ assignment.title }}
+                    <v-chip v-if="assignment.has_file" size="x-small" color="info" class="ml-2">
+                      <v-icon size="small" class="mr-1">mdi-file-document</v-icon>
+                      Document
+                    </v-chip>
                   </v-list-item-title>
 
                   <v-list-item-subtitle>
-                    <div>Class: {{ assignment.klass.klass_id }}</div>
+                    <div>Class: {{ assignment.klass?.klass_id || 'Unknown' }}</div>
                     <div>Due: {{ formatDate(assignment.due_date) }}</div>
                   </v-list-item-subtitle>
 
                   <template #append>
-                    <v-chip color="error" size="small">Past Due</v-chip>
+                    <div class="d-flex align-center">
+                      <v-btn
+                        v-if="assignment.has_file"
+                        icon="mdi-download"
+                        size="small"
+                        color="primary"
+                        variant="text"
+                        class="mr-2"
+                        :href="`/student/assignments/${assignment.id}/download`"
+                        @click.stop
+                      ></v-btn>
+                      <v-chip color="error" size="small">Past Due</v-chip>
+                    </div>
                   </template>
                 </v-list-item>
               </v-list>
@@ -173,4 +206,5 @@ const getStatusText = (dueDate) => {
       </v-row>
     </v-container>
   </studentLayout>
+
 </template>

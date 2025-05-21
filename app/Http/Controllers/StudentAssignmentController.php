@@ -62,6 +62,8 @@ public function index(){
             'title' => $assignment->title,
             'description' => $assignment->description,
             'due_date' => $assignment->due_date,
+            'file_path' => $assignment->file_path, // Add this line
+            'has_file' => !empty($assignment->file_path),
             'klass' => [
                 'id' => $assignment->klass->id,
                 'klass_id' => $assignment->klass->class_name // Using class_name for display
@@ -77,5 +79,32 @@ public function index(){
         'assignments' => $formattedAssignments
     ]);
     }
+    
+    public function downloadFile($id)
+    {
+        $assignment = Assignment::findOrFail($id);
+        
+        // Check if student is allowed to access this assignment
+        
+        $user = auth()->user();
+        $student = Student::where('user_id', $user->id)->first();
+        
+        if (!$student || $student->klass_id != $assignment->klass_id) {
+            
+            abort(403, 'You do not have permission to access this file');
+        }
+        
+        if (!$assignment->file_path) {
+            abort(404, 'No file available for this assignment');
+        }
+        
+        $path = storage_path('app/public/' . $assignment->file_path);
+        
+        if (!file_exists($path)) {
+            abort(404, 'File not found');
+        }
+        
+        return response()->download($path);
+}
     
 }

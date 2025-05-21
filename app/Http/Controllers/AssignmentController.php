@@ -26,7 +26,10 @@ class AssignmentController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx|max:10240',
         ]);
+        
+
 
         $assignment = Assignment::firstOrnew(['id'=>$request->id]);
         $assignment->klass_id = $request->klass_id;
@@ -34,6 +37,13 @@ class AssignmentController extends Controller
         $assignment->title = $request->title;
         $assignment->description = $request->description;
         $assignment->due_date = $request->due_date;
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('assignments', $fileName, 'public');
+            $assignment->file_path = $filePath;
+        }
 
         $assignment->save();
 

@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Student;
+use App\Models\Klass;
 use Illuminate\Database\Eloquent\Model;
 
 class Attendance extends Model
@@ -12,4 +13,16 @@ class Attendance extends Model
         'date', 
         'status'
     ];
+        protected $casts = [
+        'date' => 'date'
+    ];
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+    
+    public function klass() // Using klass instead of class to avoid PHP keyword
+    {
+        return $this->belongsTo(Klass::class, 'class_id');
+    }
 }

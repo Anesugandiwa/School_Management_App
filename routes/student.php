@@ -14,5 +14,7 @@ Route::group([
 
     Route::get('/studentAssignment', [StudentAssignmentController::class, 'index'])->name('stud_assignment');
 
+    Route::get('/student/assignments/{id}/download', [StudentAssignmentController::class, 'downloadFile'])->name('assignment_download');
+
 });
 

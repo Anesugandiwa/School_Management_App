@@ -8,6 +8,8 @@ use App\Http\Controllers\KlassController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\KlassSubjectTeacherController;
+use App\Http\Controllers\AttendanceReportController;
+
 
 
 Route::group([
@@ -25,6 +27,7 @@ Route::group([
     Route::resource('/Subject',SubjectController::class, );
 
     Route::resource('/subjectTeacher', KlassSubjectTeacherController::class);
+    Route::get('/studAttendence', [AttendanceReportController::class, 'index'])->name('students_attendance');
 
  
 });

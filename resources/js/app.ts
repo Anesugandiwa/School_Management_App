@@ -11,7 +11,7 @@ import vuetify from './plugins/vuetify';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
-
+import VueApexCharts from "vue3-apexcharts";
 
 
 
@@ -47,7 +47,7 @@ createInertiaApp({
             .use(ZiggyVue)
             .use(vuetify)
             .use(VueSweetalert2,options)
-            
+            .use(VueApexCharts)
             .component('InertiaLink', Link)
             .component('Head', Head)
             
