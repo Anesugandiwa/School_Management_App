@@ -44,6 +44,9 @@ public function store(Request $request){
         'marks' => 'required|array',
         'marks.*.student_id' => 'required|exists:students,id',
         'marks.*.mark' => 'required|numeric|min:0|max:100',
+        'marks.*.exam_type' => 'nullable|string|max:255',
+        'marks.*.total_marks' => 'nullable|numeric|min:0',
+        'marks.*.comment' => 'nullable|string|max:500',
     ]);
     foreach ($data['marks'] as $markData){
         Marks::updateOrCreate([
@@ -51,11 +54,13 @@ public function store(Request $request){
             'subject_id' => $data['subject_id'],
             'klass_id' => $data['klass_id'],
             'year' => now()->year,
+            'exam_type' => $markData['exam_type'] ?? null,
 
         ],
         [
-            'marks_obtained' => $markData['mark'],
-            'total_marks' => 100,
+            'marks' => $markData['mark'],
+            'total_marks' => $markData['total_marks'],
+            'remarks' => $markData['comment'],
         ]
     );
     }
