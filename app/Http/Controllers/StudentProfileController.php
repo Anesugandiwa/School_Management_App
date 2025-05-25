@@ -12,7 +12,7 @@ class StudentProfileController extends Controller
 
         return inertia('Students/studentprof',[
         'student' =>  $student,
-        'assignments' => $assignments
+        
     ]);
 
     }

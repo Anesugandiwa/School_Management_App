@@ -28,7 +28,7 @@ const menues = ref([
     {
         name: "Grades",
         icon: "mdi-chart-bar",
-        path: '',
+        path: route('report'),
     },
     {
         name: "Attendance",

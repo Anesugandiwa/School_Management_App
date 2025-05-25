@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use App\Http\controllers\StudentDashboardController;
 use App\Http\controllers\StudentProfileController;
 use App\Http\controllers\StudentAssignmentController;
+use App\Http\controllers\ReportController;
 
 Route::group([
     'middleware ' => [App\Http\Middleware\isStudent::class,]
@@ -15,6 +16,8 @@ Route::group([
     Route::get('/studentAssignment', [StudentAssignmentController::class, 'index'])->name('stud_assignment');
 
     Route::get('/student/assignments/{id}/download', [StudentAssignmentController::class, 'downloadFile'])->name('assignment_download');
+
+    Route::get('/report', [ReportController::class, 'index'])->name('report');
 
 });
 

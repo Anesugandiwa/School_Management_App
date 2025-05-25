@@ -3,6 +3,7 @@
 namespace App\Models;
 use App\Models\Klass;
 use App\Models\User;
+use App\Models\Marks;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,4 +31,8 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function marks()
+{
+    return $this->hasMany(Marks::class);
+}
 }
