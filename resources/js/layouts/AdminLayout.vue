@@ -54,6 +54,7 @@ const menues = ref([
     },
     {
         name: "Activities & Events",
+        path: route('admin.activity.index'),
         icon: "mdi-calendar-multiselect",
         id: 8,
     },

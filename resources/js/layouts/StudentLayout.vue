@@ -40,6 +40,11 @@ const menues = ref([
         icon: "mdi-message-text",
         path: '',
     },
+    {
+        name:"Events And Activities",
+        icon: "",
+        path:route('student_activity')
+    }
 ])
 
 function logout() {

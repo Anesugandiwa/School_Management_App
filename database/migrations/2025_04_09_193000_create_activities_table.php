@@ -13,9 +13,19 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id');
-            $table->date('date');
+            $table->string('title')->nullable();
             $table->text('description')->nullable();
+            $table->enum('category', ['activity', 'event'])->nullable(); 
+            $table->enum('type', ['academic', 'sports', 'cultural', 'meeting', 'ceremony', 'club', 'other'])->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
+            $table->string('location')->nullable();
+            $table->json('target_classes')->nullable(); // ['all', 'grade_7', 'grade_8']
+            $table->boolean('requires_registration')->default(false);
+            $table->dateTime('registration_deadline')->nullable();
+            $table->boolean('is_mandatory')->default(false);
+            $table->text('requirements')->nullable();
+            $table->enum('status', ['scheduled', 'ongoing', 'completed', 'cancelled'])->default('scheduled')->nullable();
 
             $table->timestamps();
         });
