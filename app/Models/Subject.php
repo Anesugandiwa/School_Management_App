@@ -3,6 +3,7 @@
 namespace App\Models;
 use App\Models\Teacher;
 use App\Models\Klass;
+use App\Models\TimeTable;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,5 +29,9 @@ class Subject extends Model
     return $this->belongsToMany(Teacher::class, 'klass_subject_teacher')
         ->withPivot('klass_id')
         ->withTimestamps();
+}
+
+public function timetables(){
+    return $this->hasMany(TimeTable::class);
 }
 }

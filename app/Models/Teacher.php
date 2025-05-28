@@ -5,6 +5,7 @@ use Str;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Klass;
 use App\Models\Subject;
+use App\Models\TimeTable;
 use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
@@ -55,5 +56,9 @@ class Teacher extends Model
     public function assignedSubjects()
     {
         return $this->belongsToMany(Subject::class, 'klass_subject_teacher', 'teacher_id', 'subject_id')->distinct();
+    }
+
+    public function timetables(){
+        return $this->hasMany(TimeTable::class);
     }
 }

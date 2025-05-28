@@ -59,6 +59,11 @@ const menues = ref([
         id: 8,
     },
     {
+        name: "Time Table",
+        path: route('admin.timeTable.index'),
+        id:9,
+    },
+    {
         name: "Manage Fees",
         icon: "mdi-cash-multiple",
         id: 10,
