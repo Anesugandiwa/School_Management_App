@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Models;
+use App\Models\Teacher;
+use App\Models\Subject;
+use App\Models\Klass;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,6 +24,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'email_verified_at',
     ];
 
     /**
@@ -45,4 +50,23 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class);
+    }
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'subject_teacher', 'teacher_id', 'subject_id');
+    }
+    public function klass(){
+        return $this->hasMany(Klass::class);
+    }
+
+    public function studentklass(){
+        return $this->belongsTo(Klass::class, 'klass_id');
+    }
+    public function student(){
+        return $this->hasOne(Student::class);
+    }
+    
 }
