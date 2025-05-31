@@ -20,6 +20,11 @@ return new class extends Migration
             $table->string('day_of_week'); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
             $table->time('start_time');
             $table->time('end_time');
+            $table->boolean('is_break')->default(false);
+            $table->string('academic_year')->default(now()->year);
+            $table->enum('term', ['1st Term', '2nd Term', '3rd Term'])->default('1st Term')->nullable();
+            $table->integer('period')->nullable(); 
+            $table->string('period_name')->nullable();
             $table->timestamps();
         });
     }

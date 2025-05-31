@@ -15,6 +15,10 @@ class TimeTable extends Model
         'day_of_week',
         'start_time',
         'end_time',
+        'academic_year',
+        'term',
+        'period',
+        'period_name',
         
     ];
 
