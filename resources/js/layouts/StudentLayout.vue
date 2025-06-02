@@ -18,7 +18,7 @@ const menues = ref([
     {
         name: "My Schedule",
         icon: "mdi-calendar-clock",
-        path: '',
+        path: route('student_timetable'),
     },
     {
         name: "Assignments",

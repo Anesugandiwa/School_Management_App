@@ -2,6 +2,8 @@
 import { ref, computed, watch, onMounted } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import StudentLayout from '@/layouts/StudentLayout.vue';
+import { usePage } from '@inertiajs/vue3'
 
 const props = defineProps({
   klass: Object,
@@ -10,10 +12,16 @@ const props = defineProps({
   error: String
 });
 
-const loading = ref(false);
+const loading = ref(true);
 const timetable = ref({});
+const error = ref(null);
 const selectedTerm = ref(props.currentTerm || '1st Term');
 const selectedAcademicYear = ref(props.academicYear || new Date().getFullYear().toString());
+
+const page = usePage()
+const klass = page.props.klass
+const currentTerm = page.props.currentTerm
+const academicYear = page.props.academicYear
 
 const daysOfWeek = [
   { name: 'Monday', short: 'Mon' },
@@ -86,7 +94,7 @@ const fetchTimetable = async () => {
   try {
     loading.value = true;
     
-    const response = await axios.get(route('student.timetable.fetch'), {
+    const response = await axios.get(route('student_timetable_fetch'), {
       params: {
         term: selectedTerm.value,
         academic_year: selectedAcademicYear.value
@@ -114,6 +122,9 @@ const fetchTimetable = async () => {
     loading.value = false;
   }
 };
+onMounted(() => {
+  fetchTimetable()
+})
 
 const isCurrentPeriod = (period) => {
   const now = new Date();
@@ -155,6 +166,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <StudentLayout>
   <v-container fluid>
     <!-- Header -->
     <v-row class="mb-6">
@@ -388,64 +400,22 @@ onMounted(() => {
         </div>
 
         <!-- Mobile View -->
-        <div class="d-sm-none">
-          <v-expansion-panels multiple>
-            <v-expansion-panel 
-              v-for="day in daysOfWeek" 
-              :key="day.name"
-              :title="day.name"
-              :value="day.name === new Date().toLocaleDateString('en-US', { weekday: 'long' })"
-            >
-              <v-expansion-panel-text>
-                <div v-if="timetable[day.name] && timetable[day.name].length > 0">
-                  <v-card
-                    v-for="(period, index) in timetable[day.name]"
-                    :key="index"
-                    :color="getPeriodCardColor(period)"
-                    variant="outlined"
-                    class="mb-3"
-                  >
-                    <v-card-text>
-                      <div class="d-flex justify-space-between align-center mb-2">
-                        <div class="text-subtitle-2 font-weight-bold">{{ period.period_name }}</div>
-                        <div class="text-caption">{{ period.start_time }} - {{ period.end_time }}</div>
-                      </div>
-                      
-                      <!-- Break periods -->
-                      <div v-if="period.is_break" class="text-body-1 font-weight-bold text-orange">
-                        {{ period.period_name }}
-                      </div>
-                      
-                      <!-- Regular periods -->
-                      <div v-else-if="period.subject_name">
-                        <div class="text-body-1 font-weight-bold text-primary">
-                          {{ period.subject_name }}
-                        </div>
-                        <div class="text-body-2 text-medium-emphasis" v-if="period.teacher_name">
-                          {{ period.teacher_name }}
-                        </div>
-                      </div>
-                      
-                      <!-- Free periods -->
-                      <div v-else class="text-body-2 text-medium-emphasis">
-                        Free Period
-                      </div>
-                    </v-card-text>
-                  </v-card>
-                </div>
-                
-                <!-- No periods for this day -->
-                <div v-else class="text-center py-4 text-medium-emphasis">
-                  <v-icon class="mb-2">mdi-calendar-blank</v-icon>
-                  <div>No classes scheduled</div>
-                </div>
-              </v-expansion-panel-text>
-            </v-expansion-panel>
-          </v-expansion-panels>
-        </div>
+        
+
       </v-card-text>
     </v-card>
+      <div>
+    <div v-if="loading">Loading timetable...</div>
+
+    <div v-if="error">{{ error }}</div>
+
+   <!-- <div v-if="timetable">
+      Display timetable 
+      <pre>{{ timetable }}</pre>
+    </div> -->
+  </div>
   </v-container>
+</StudentLayout>
 </template>
 
 <style scoped>
