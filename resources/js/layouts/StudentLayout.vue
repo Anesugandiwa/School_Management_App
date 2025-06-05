@@ -25,6 +25,7 @@ const menues = ref([
         icon: "mdi-book-open-page-variant",
         path: route('stud_assignment'),
     },
+
     {
         name: "Grades",
         icon: "mdi-chart-bar",

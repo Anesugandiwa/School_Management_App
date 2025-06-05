@@ -9,6 +9,8 @@ use App\Http\Controllers\MarksController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\TeacherTimeTableController;
+use App\Http\Controllers\SubAttendanceController;
 use App\Http\Middleware\isTeacher;
 
 Route::group([
@@ -38,7 +40,17 @@ Route::group([
     // Assignment Routes
     Route::get('/assignment', [AssignmentController::class, 'index'])->name('assignment');
     Route::post('/assignment', [AssignmentController::class, 'store'])->name('uploadAssignment');
-  
+
+
+    // timetable routes
+    Route::get('/timetable', [TeacherTimeTableController::class, 'index'])->name('timetable.index');
+    Route::get('/timetable/fetch', [TeacherTimeTableController::class, 'fetchTimetable'])->name('timetable.fetch');
+
+    // Subject Attendance routes
+
+    Route::get('/subattendance', [SubAttendanceController::class, 'index'])->name('subjectAttendance');
+    Route::get('/subattendance/fetch', [SubAttendanceController::class, 'getStudents'])->name('getStudents');
+    Route::post('/subattendance/store', [SubAttendanceController::class, 'store'])->name('store_attendance');
 });
 
 

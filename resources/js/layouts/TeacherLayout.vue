@@ -10,11 +10,11 @@ const menues = ref([
         icon: "mdi-monitor-dashboard",
         path: route('teacher.dis'),
     },
-    {
-        name: "Profile",
-        icon: "mdi-chart-line",
-        path: route('teacher.profile'),
-    },
+    // {
+    //     name: "Profile",
+    //     icon: "mdi-chart-line",
+    //     path: route('teacher.profile'),
+    // },
     {
         name: "My Subjects",
         icon: "mdi-book-open-page-variant",
@@ -44,6 +44,14 @@ const menues = ref([
         name: "Reports",
         icon: "mdi-chart-line",
         path: route('teacher.teachersub'),
+    },
+    {
+        name: "Time Table",
+        path: route('teacher.timetable.index'),
+    },
+    {
+        name: "Subject Attendance",
+        path: route('teacher.subjectAttendance'),
     },
 ])
 

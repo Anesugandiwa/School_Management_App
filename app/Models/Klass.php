@@ -5,6 +5,7 @@ use App\Models\Teacher;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\TimeTable;
+use App\Models\SubAttendance;
 use Illuminate\Database\Eloquent\Model;
 
 class Klass extends Model
@@ -37,6 +38,9 @@ class Klass extends Model
 
     public function timetables(){
         return $this->hasMany(TimeTable::class);
+    }
+    public function subAttendances(){
+        return $this->hasMany(SubAttendance::class);
     }
 
 }

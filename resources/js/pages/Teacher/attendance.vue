@@ -93,7 +93,7 @@ const saveAttendance = () => {
           { title: 'Student Name', key: 'name' },
           { title: 'Student Surname', key: 'surname' },
           { title: 'Status', key: 'status' }
-        ]"untu
+        ]"
         :items="students"
       >
         <template v-slot:item.status="{ item }">
