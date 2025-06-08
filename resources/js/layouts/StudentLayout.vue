@@ -34,7 +34,7 @@ const menues = ref([
     {
         name: "Attendance",
         icon: "mdi-check-circle",
-        path: '',
+        path: route('attendance.index'),
     },
     {
         name: "Messages",

@@ -7,6 +7,7 @@ use App\Http\controllers\StudentAssignmentController;
 use App\Http\controllers\ReportController;
 use App\Http\controllers\StudentActivityController;
 use App\Http\controllers\StudentTableController;
+use App\Http\controllers\StudentSubAttendanceController;
 
 Route::group([
     'middleware ' => [App\Http\Middleware\isStudent::class,]
@@ -27,6 +28,8 @@ Route::group([
     Route::get('/table', [StudentTableController::class, 'studentIndex'])->name('student_timetable');
     Route::get('/table/fetch', [StudentTableController::class, 'studentFetch'])->name('student_timetable_fetch');
 
+    Route::get('/attendance', [StudentSubAttendanceController::class, 'attendanceIndex'])->name('attendance.index');
+    Route::get('/attendance/stats', [StudentSubAttendanceController::class, 'getAttendanceStats'])->name('attendance.stats');
 
 });
 
