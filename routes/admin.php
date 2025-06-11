@@ -35,6 +35,7 @@ Route::group([
     Route::resource('/timeTable', TimeTableController::class);
 
     Route::get('/admin/timetable/fetch', [TimetableController::class, 'fetch'])->name('fetchez');
+    
 
  
 });

@@ -47,11 +47,11 @@ const menues = ref([
         icon: "mdi-calendar-check",
         id: 6,
     },
-    {
-        name: "Reports",
-        icon: "mdi-chart-box-outline",
-        id: 7,
-    },
+    // {
+    //     name: "Reports",
+    //     icon: "mdi-chart-box-outline",
+    //     id: 7,
+    // },
     {
         name: "Activities & Events",
         path: route('admin.activity.index'),
@@ -61,13 +61,14 @@ const menues = ref([
     {
         name: "Time Table",
         path: route('admin.timeTable.index'),
+        icon: "mdi-timetable",
         id:9,
     },
-    {
-        name: "Manage Fees",
-        icon: "mdi-cash-multiple",
-        id: 10,
-    }
+    // {
+    //     name: "Manage Fees",
+    //     icon: "mdi-cash-multiple",
+    //     id: 10,
+    // }
 
 
 

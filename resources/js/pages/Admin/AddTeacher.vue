@@ -166,7 +166,7 @@ const viewTeacher = (teacher) => {
                     <v-card elevation="1" class="pa-4">
                         <v-row align="center" justify="space-between">
                             <h1 class ="text-h6 font-weight-bold"> Teachers</h1>
-                            <v-btn color="success" @click="isDialogOpen = !isDialogOpen">Add Teacher</v-btn>
+                            <v-btn color="primary" @click="isDialogOpen = !isDialogOpen">Add Teacher</v-btn>
 
                         </v-row>
 
@@ -285,8 +285,8 @@ const viewTeacher = (teacher) => {
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer />
-                    <v-btn color="red" @click="closeDialog">Cancel</v-btn>
-                    <v-btn color="green" @click="submitForm">
+                    <v-btn color="red" @click="closeDialog" variant="flat">Cancel</v-btn>
+                    <v-btn color="green" @click="submitForm" variant="flat">
                         {{ isEditing? 'Update Teacher Details' : 'Save Teacher' }}
                     </v-btn>
                 </v-card-actions>
@@ -310,9 +310,9 @@ const viewTeacher = (teacher) => {
 
                 <template v-slot:item.actions="{ item }">
                     <div class="d-flex">
-                        <v-btn color="info" class="mx-1 no-uppercase" @click="viewTeacher(item)">
+                        <!-- <v-btn color="info" class="mx-1 no-uppercase" @click="viewTeacher(item)">
                             View
-                        </v-btn>
+                        </v-btn> -->
                         <v-btn class="mx-1 no-uppercase" @click="editTeacher(item)">
                             Edit
                         </v-btn>
