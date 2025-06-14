@@ -18,10 +18,10 @@ const menues = ref([
         id: 2,
     },
     {
-        name: "Add Students",
-        path: route('admin.AddStudent.index'),
-        icon:"mdi-account-multiple",
-        id: 3,
+        name: "Manage Subjects",
+        path: route('admin.Subject.index'),
+        icon: "mdi-book-open-page-variant",
+        id: 5,
     },
     {
         name: "Manage Classes",
@@ -30,11 +30,13 @@ const menues = ref([
         id: 4,
     },
     {
-        name: "Manage Subjects",
-        path: route('admin.Subject.index'),
-        icon: "mdi-book-open-page-variant",
-        id: 5,
+        name: "Add Students",
+        path: route('admin.AddStudent.index'),
+        icon:"mdi-account-multiple",
+        id: 3,
     },
+
+
     {
         name: "Assign Teacher",
         path: route('admin.subjectTeacher.index'),

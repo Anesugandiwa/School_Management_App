@@ -15,6 +15,9 @@ class Assignment extends Model
         'due_date',
         'file_path'
     ];
+    protected $casts = [
+        'due_date' => 'date',
+    ];
 
     public function klass(){
         return $this->belongsTo(Klass::class);

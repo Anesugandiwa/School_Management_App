@@ -4,12 +4,38 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\KlassSubjectTeacher;
 use App\Models\Teacher;
+use App\Models\Student;
+use App\Models\Klass;
+use App\Models\Attendance;
+use App\Models\Assignment;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
 
 class TeacherDashboardController extends Controller
 {
     public function index(){
-        return inertia('Teacher/display');
+        $teacher = auth()->user()->teacher;
+        $count = Assignment::whereHas('klass.subjectTeachers', function ($query) use ($teacher) {
+                $query->where('teacher_id', $teacher->id);
+        })
+        ->where('due_date', '>=', \Carbon\Carbon::today())
+        ->count();
+        
+        $assignments = Assignment::whereHas('klass.subjectTeachers', function ($query) use ($teacher) {
+            $query->where('teacher_id', $teacher->id);
+        })
+            ->where('due_date', '>=', now())
+            ->with(['klass', 'subject']) // eager load relationships
+            ->orderBy('due_date', 'asc')
+            ->get();
+
+        return inertia('Teacher/display',[
+            'assignments' => $assignments,
+            'stats' => [
+                'upcomingAssignments' => $count,
+        ]
+        ]);
     }
     public function klass(){
     $user = auth()->user();
@@ -68,6 +94,55 @@ class TeacherDashboardController extends Controller
         'totalSubjects' => $teacherAssignments->count(),
     ]);
 }
+
+
+public function getAttendanceRate()
+{
+    $teacher = auth()->user()->teacher;
+
+    // Get class assigned to the teacher
+    $klass = Klass::where('teacher_id', $teacher->id)->first();
+
+    if (!$klass) {
+        return response()->json(['attendance' => 0]); // No class assigned
+    }
+
+    // Count all students in the class
+    $studentsCount = Student::where('klass_id', $klass->id)->count();
+
+    // Count total attendance entries for students in that class
+    $attendancesCount = Attendance::whereHas('student', function ($query) use ($klass) {
+        $query->where('klass_id', $klass->id);
+    })->count();
+
+    // Get total days attendance was marked (assuming one record per student per day)
+    $distinctDates = Attendance::whereHas('student', function ($query) use ($klass) {
+        $query->where('klass_id', $klass->id);
+    })->distinct('date')->count('date');
+
+    // Total possible attendance records = students × distinct dates
+    $totalPossible = $studentsCount * $distinctDates;
+
+    // Calculate percentage
+    $attendanceRate = $totalPossible > 0
+        ? round(($attendancesCount / $totalPossible) * 100, 2)
+        : 0;
+
+    return response()->json(['attendance' => $attendanceRate]);
+}
+
+public function studentCount (){
+    $teacher = auth()->user()->teacher;
+    $klass = Klass::where('teacher_id', $teacher->id)->first();
+
+    $studentCount = Student::where('klass_id', $klass->id)->count();
+
+    return response()->json(['studentCount' =>$studentCount]);
+}
+
+
+
+
    
 
     

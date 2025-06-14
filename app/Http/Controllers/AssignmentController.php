@@ -11,10 +11,13 @@ class AssignmentController extends Controller
         $teacher = auth()->user()->teacher;
         $klasses = $teacher->assignedKlasses;
         $subjects = $teacher->assignedSubjects;
+        
+
     
         return inertia('Teacher/assignment', [
             'klasses' => $klasses,
             'subjects' => $subjects,
+            
            
         ]); 
     }

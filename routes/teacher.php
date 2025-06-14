@@ -51,6 +51,9 @@ Route::group([
     Route::get('/subattendance', [SubAttendanceController::class, 'index'])->name('subjectAttendance');
     Route::get('/subattendance/fetch', [SubAttendanceController::class, 'getStudents'])->name('getStudents');
     Route::post('/subattendance/store', [SubAttendanceController::class, 'store'])->name('store_attendance');
+
+    Route::get('/teacher/attendance-percentage', [TeacherDashboardController::class, 'getAttendanceRate'])->name('percentage');
+    Route::get('/teacher/count', [TeacherDashboardController::class, 'studentCount'])->name('count');
 });
 
 
