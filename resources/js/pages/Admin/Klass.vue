@@ -144,7 +144,7 @@ const viewClass = (klass) => {
                     <v-card elevation="1" class="pa-4">
                         <v-row align="center" justify="space-between">
                             <h1 class="text-h6 font-weight-bold"> Classes </h1>
-                            <v-btn color="success" @click="openDialog">Add Class</v-btn>
+                            <v-btn color="primary" @click="openDialog">Add Class</v-btn>
                         </v-row>
                     </v-card>
                 </v-col>
@@ -217,8 +217,8 @@ const viewClass = (klass) => {
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer />
-                        <v-btn color="red" @click="closeDialog">Cancel</v-btn>
-                        <v-btn color="green" @click="submitForm">
+                        <v-btn color="red" @click="closeDialog" variant="flat">Cancel</v-btn>
+                        <v-btn color="green" @click="submitForm" variant="flat">
                             {{ isEditing ? 'Update Class' : 'Save Class' }}
                         </v-btn>
                     </v-card-actions>
@@ -246,9 +246,9 @@ const viewClass = (klass) => {
 
                 <template v-slot:item.actions="{ item }">
                     <div class="d-flex">
-                        <v-btn color="info" class="mx-1 no-uppercase" @click="viewClass(item)">
+                        <!-- <v-btn color="info" class="mx-1 no-uppercase" @click="viewClass(item)">
                             View
-                        </v-btn>
+                        </v-btn> -->
                         <v-btn class="mx-1 no-uppercase" @click="editClass(item)">
                             Edit
                         </v-btn>

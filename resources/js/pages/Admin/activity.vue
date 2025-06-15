@@ -103,7 +103,7 @@ const deleteActivity = (activity) => {
                     <v-card elevation="1" class="pa-4">
                         <v-row align="center" justify="space-between">
                             <h1 class="text-h6 font-weight-bold">Events And Activities</h1>
-                            <v-btn color="success" @click="openDialog">Add New Event and Activity</v-btn>
+                            <v-btn color="primary" @click="openDialog">Add New Event and Activity</v-btn>
                         </v-row>
                     </v-card>
                 </v-col>
@@ -305,9 +305,9 @@ const deleteActivity = (activity) => {
             >
             <template v-slot:item.actions="{item}">
                 <div class="d-flex">
-                    <v-btn color="info" class="mx-1 no-uppercase" @click="viewActivity(item)">
+                    <!-- <v-btn color="info" class="mx-1 no-uppercase" @click="viewActivity(item)">
                         View
-                    </v-btn>
+                    </v-btn> -->
                     <v-btn class="mx-1 no-uppercase" @click="editActivity(item)">
                         Edit
                     </v-btn>

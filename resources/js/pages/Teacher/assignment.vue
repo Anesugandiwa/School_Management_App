@@ -101,7 +101,7 @@ const uploadAssignment = () => {
       <v-row>
         <v-col cols="12" md="6">
           <v-text-field
-            v-model="form.due_date"
+            v-model="dueDate"
             label="Due Date"
             placeholder="YYYY-MM-DD"
             

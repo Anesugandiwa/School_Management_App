@@ -58,9 +58,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Subject::class, 'subject_teacher', 'teacher_id', 'subject_id');
     }
-    public function klass(){
-        return $this->hasMany(Klass::class);
-    }
+    // public function klass(){
+    //     return $this->hasMany(Klass::class);
+    // }
 
     public function studentklass(){
         return $this->belongsTo(Klass::class, 'klass_id');

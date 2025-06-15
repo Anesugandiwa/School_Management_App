@@ -8,7 +8,7 @@ const menues = ref([
     {
         name: "Dashboard",
         icon: "mdi-monitor-dashboard",
-        path: '',
+        path: route('student_dashboard'),
     },
     {
         name: "Profile",
@@ -18,13 +18,14 @@ const menues = ref([
     {
         name: "My Schedule",
         icon: "mdi-calendar-clock",
-        path: '',
+        path: route('student_timetable'),
     },
     {
         name: "Assignments",
         icon: "mdi-book-open-page-variant",
         path: route('stud_assignment'),
     },
+
     {
         name: "Grades",
         icon: "mdi-chart-bar",
@@ -33,7 +34,7 @@ const menues = ref([
     {
         name: "Attendance",
         icon: "mdi-check-circle",
-        path: '',
+        path: route('attendance.index'),
     },
     {
         name: "Messages",
@@ -42,7 +43,7 @@ const menues = ref([
     },
     {
         name:"Events And Activities",
-        icon: "",
+        icon: "mdi-calendar-text",
         path:route('student_activity')
     }
 ])

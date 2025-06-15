@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mail\StudentNotificationMail;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Activity;
 
 class ActivityController extends Controller
@@ -44,6 +46,12 @@ class ActivityController extends Controller
 
 
         $activity = Activity::create($validated);
+        $students = Student::whereIn('klass_id', $validated['target_classes'])->get();
+        foreach ($students as $student) {
+        if ($student->user && $student->email) {
+        Mail::to($student->email)->send(new StudentNotificationMail($student, $activity));
+        }
+        }
 
         return redirect()->route('admin.activity.index')
                         ->with('success', ucfirst($activity->category) . ' created successfully!');

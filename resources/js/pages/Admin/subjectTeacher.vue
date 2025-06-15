@@ -1,13 +1,17 @@
 <script setup>
 import AdminLayout from '@/layouts/AdminLayout.vue';
 import axios from 'axios';
-import { useForm } from '@inertiajs/vue3';
-import {ref, onMounted} from 'vue';
+import { useForm, usePage  } from '@inertiajs/vue3';
+import {ref, onMounted, computed} from 'vue';
 import Swal from 'sweetalert2';
+
+const { props } = usePage();
 
 const teachersList = ref([])
 const subjectList = ref([])
 const klassList = ref([])
+
+const editingItem = ref(null)
 
 const form = useForm({
     teachers: null,
@@ -46,6 +50,17 @@ onMounted( async()=> {
         console.error('error while fetching subjects', error)
     }
 })
+const columns = ref([
+  { key: 'teacher_name', title: 'Teacher' },
+  { key: 'class_name', title: 'Class' },
+  { key: 'subject_name', title: 'Subjects' },
+  
+  { key: 'actions', title: 'Actions' },
+]);
+
+
+
+
 const isDialogOpen = ref(false)
 const isEditing = ref(false)
 
@@ -66,6 +81,7 @@ const saveData =() =>{
             onSuccess: () => {
                 closeDialog()
                 Swal.fire('Success!', ' updated successfully.', 'success')
+                Inertia.reload({ only: ['klassSubjectTeacher'] }); 
             },
             onError: (newErrors) => {
                 errors.value = newErrors
@@ -76,12 +92,46 @@ const saveData =() =>{
             onSuccess: () => {
                 closeDialog()
                 Swal.fire('Success!', ' successfully assigned to the class .', 'success')
+                Inertia.reload({ only: ['klassSubjectTeacher'] }); 
             },
             onError: (newErrors) => {
                 errors.value = newErrors
             }
         })
     }
+}
+const editItem = (subjectTeacher) =>{
+    isEditing.value = true
+    editingItem.value = subjectTeacher
+
+    form.teachers =subjectTeacher.teacher_id
+    form.subjects = [subjectTeacher.subject_id]
+    form.klasses = [subjectTeacher.klass_id]
+    form.id = subjectTeacher.id
+
+    isDialogOpen.value = true
+}
+const deleteItem =  (subjectTeacher) => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to delete this assignment?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+    if (result.isConfirmed) {
+      form.delete(route('admin.subjectTeacher.destroy', subjectTeacher.id), {
+        onSuccess: () => {
+          Swal.fire('Deleted!', 'Assignment has been deleted.', 'success');
+          Inertia.reload({ only: ['klassSubjectTeacher'] }); 
+        },
+      });
+    }
+  });
+    
+    
 }
 
 
@@ -94,8 +144,8 @@ const saveData =() =>{
                 <v-col>
                     <v-card class="pa-4">
                         <v-row justify="space-between" align="center">
-                            <h2 class="text-h6 font-weight-bold">Subjects</h2>
-                            <v-btn color="primary" @click="openDialog">Assign Teacher to the class</v-btn>
+                            <h2 class="text-h6 font-weight-bold">Assign Teachers to Subjects</h2>
+                            <v-btn color="primary" @click="openDialog">Assign Teacher</v-btn>
                         </v-row>
                     </v-card>
                 </v-col>
@@ -169,6 +219,28 @@ const saveData =() =>{
                 </v-card>
 
             </v-dialog>
+             <v-data-table
+                :headers="columns"
+                :items="props.klassSubjectTeacher"
+                class="elevation-1 text-body-3"
+                
+             >
+             <template v-slot:item.actions="{ item }">
+                <v-btn
+                    icon="mdi-pencil"
+                    size="small"
+                    @click="editItem(item)"
+                    color="red"
+                ></v-btn>
+                <v-btn
+                    icon="mdi-delete"
+                    size="small"
+                    color="red"
+                    @click="deleteItem(item)"
+                ></v-btn>
+             </template>
+
+             </v-data-table>
         </v-container>
 
     </AdminLayout>

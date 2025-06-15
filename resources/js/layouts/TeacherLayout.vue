@@ -10,11 +10,11 @@ const menues = ref([
         icon: "mdi-monitor-dashboard",
         path: route('teacher.dis'),
     },
-    {
-        name: "Profile",
-        icon: "mdi-chart-line",
-        path: route('teacher.profile'),
-    },
+    // {
+    //     name: "Profile",
+    //     icon: "mdi-chart-line",
+    //     path: route('teacher.profile'),
+    // },
     {
         name: "My Subjects",
         icon: "mdi-book-open-page-variant",
@@ -22,17 +22,17 @@ const menues = ref([
     },
     {
         name: "Add Marks",
-        icon: "mdi-book-open-page-variant",
+        icon: "mdi-clipboard-list-outline",
         path: route('teacher.addmarks'),
     },
     {
-        name: "Mark Attendance",
-        icon: "mdi-book-open-page-variant",
+        name: " Register",
+        icon: "mdi-check-circle",
         path: route('teacher.get'),
     },
     {
         name: "Upload Assignment",
-        icon: "mdi-book-open-page-variant",
+        icon: "mdi-upload",
         path: route('teacher.assignment'),
     },
     {
@@ -44,6 +44,17 @@ const menues = ref([
         name: "Reports",
         icon: "mdi-chart-line",
         path: route('teacher.teachersub'),
+    },
+    {
+        name: "Time Table",
+        path: route('teacher.timetable.index'),
+        icon: "mdi-timetable",
+    },
+    {
+        name: "Subject Attendance",
+        path: route('teacher.subjectAttendance'),
+        icon: "mdi-check-circle",
+        
     },
 ])
 

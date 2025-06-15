@@ -4,6 +4,8 @@ namespace App\Models;
 use App\Models\Teacher;
 use App\Models\Student;
 use App\Models\Subject;
+use App\Models\TimeTable;
+use App\Models\SubAttendance;
 use Illuminate\Database\Eloquent\Model;
 
 class Klass extends Model
@@ -32,6 +34,13 @@ class Klass extends Model
         return $this->belongsToMany(Teacher::class, 'klass_subject_teacher')
         ->withPivot('subject_id')
         ->withTimestamps();
+    }
+
+    public function timetables(){
+        return $this->hasMany(TimeTable::class);
+    }
+    public function subAttendances(){
+        return $this->hasMany(SubAttendance::class);
     }
 
 }

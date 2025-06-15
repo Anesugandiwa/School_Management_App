@@ -22,7 +22,7 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue';
             ></v-img>
             
             <v-card-title class="text-h5 font-weight-bold justify-center primary--text">
-              Cheunje High School Portal
+               High School Portal
             </v-card-title>
             
             <v-card-subtitle class="text-subtitle-1 py-2">
@@ -44,6 +44,7 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue';
                       color="primary"
                       block
                       class="mb-2"
+                      :href="route('login')"
 
                     >
                       Get started 
@@ -73,7 +74,7 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue';
             <!-- Footer Notice -->
             <v-card-actions class="justify-center">
               <span class="text-caption grey--text">
-                © 2023 Cheunje High School. All rights reserved.
+                © 2025  High School. All rights reserved.
               </span>
             </v-card-actions>
           </v-card>

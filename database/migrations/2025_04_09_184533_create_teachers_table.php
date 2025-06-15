@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
+            $table->foreignId('user_id')->nullable();
             $table->enum('gender',['Male', 'Female', 'Other'])->default('Other');
             $table->date('Date_Of_Birth')->nullable();
             $table->string('national_id')->nullable();
@@ -23,7 +24,7 @@ return new class extends Migration
             $table->string('address');
             $table->enum('department',['Science', 'Arts', 'Languages', 'commercials'])->default('Science');
             $table->string('password')->nullable();
-            $table->foreignId('user_id')->nullable();
+            
             $table->json('subjects')->nullable()->change();
             $table->foreignId('klass_id')->nullable();
             $table->timestamps();

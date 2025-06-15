@@ -10,6 +10,7 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\KlassSubjectTeacherController;
 use App\Http\Controllers\AttendanceReportController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\TimeTableController;
 
 
 
@@ -31,6 +32,10 @@ Route::group([
     Route::get('/studAttendence', [AttendanceReportController::class, 'index'])->name('students_attendance');
 
     Route::resource('/activity', ActivityController::class);
+    Route::resource('/timeTable', TimeTableController::class);
+
+    Route::get('/admin/timetable/fetch', [TimetableController::class, 'fetch'])->name('fetchez');
+    
 
  
 });
