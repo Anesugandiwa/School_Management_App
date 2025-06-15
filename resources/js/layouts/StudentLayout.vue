@@ -8,7 +8,7 @@ const menues = ref([
     {
         name: "Dashboard",
         icon: "mdi-monitor-dashboard",
-        path: '',
+        path: route('student_dashboard'),
     },
     {
         name: "Profile",
@@ -43,7 +43,7 @@ const menues = ref([
     },
     {
         name:"Events And Activities",
-        icon: "",
+        icon: "mdi-calendar-text",
         path:route('student_activity')
     }
 ])
